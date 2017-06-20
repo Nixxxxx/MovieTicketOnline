@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
   <!-- logo -->
-  <link rel="shortcut icon" href="/MovieTicketOnline/static/dist/img/favicon.ico">
+  <link rel="shortcut icon" href="/MovieTicketOnline/static/dist/img/favicon.png">
   <!--  jQuery 3.1.1 -->
   <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
   <!--  Bootstrap 3.3.6  -->
@@ -101,12 +101,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="static/dist/img/logo.png" class="user-image" alt="User Image">
+              <img src="static/dist/img/favicon.png" class="user-image" alt="User Image">
               <span class="hidden-xs">${admin.adminName }</span> </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="static/dist/img/logo.png" class="img-circle" alt="User Image">
+                <img src="static/dist/img/favicon.png" class="img-circle" alt="User Image">
                 <p>
                 	${admin.adminName }-超级管理员
                 </p>
@@ -117,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <a href="javascript:void(0)" class="btn btn-success btn-flat">修改信息</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/Xungeng/admin/signOut" class="btn btn-info btn-flat">退出登录</a>
+                  <a href="admin/signOut" class="btn btn-info btn-flat">退出登录</a>
                 </div>
               </li>
             </ul>
@@ -138,7 +138,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <i class="fa fa-angle-left pull-right"></i>
           </span> </a>
           <ul class="treeview-menu">
-            <li><a href="/Xungeng/main/showInfo" target="container"><i class="fa fa-circle-o"></i> 系统总览 </a></li>
+            <li><a href="main/showInfo" target="container"><i class="fa fa-circle-o"></i> 系统总览 </a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -205,11 +205,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <iframe name="container" style="zoom: 1;" height="650px;" src="/Xungeng/main/showInfo" frameBorder="0" width="100%"></iframe>
+    <iframe name="container" style="zoom: 1;" height="650px;" src="" frameBorder="0" width="100%"></iframe>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer text-center">
-    <strong>电票贩</strong> All Rights Reserved &copy; 2017
+    <strong> <a href="#" target="_blank">电票贩</a> </strong> All Rights Reserved &copy; 2017
   </footer>
 </div>
 <!-- ./wrapper -->
