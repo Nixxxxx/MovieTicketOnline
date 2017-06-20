@@ -8,13 +8,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>电票</title>
+    <title>电票贩</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<%=basePath%>">
-    <link rel="shortcut icon" href="/Xungeng/static/favicon.png">
-    <link rel="stylesheet" href="/Xungeng/static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/Xungeng/static/dist/css/login.css">
+    <link rel="shortcut icon" href="/MovieTicketOnline/static/dist/img/favicon.png">
+    <link rel="stylesheet" href="/MovieTicketOnline/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/login.css">
     
     <style>
         body {
@@ -24,13 +24,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="container w-xxl w-auto-xs">
-    <a href="" class="navbar-brand block m-t m-b-sm">无线巡更系统管理</a>
+    <a href="" class="navbar-brand block m-t m-b-sm">电票贩</a>
     <div class="m-b-xxl">
         <div class="wrapper text-center">
             <strong>Sign in</strong>
         </div>
-        <form id="login_form">
-            <div class="text-danger wrapper-xs text-center invisible" id="error_msg">
+        <form id="signInForm">
+            <div class="text-danger wrapper-xs text-center invisible" id="errorMsg">
                 	错误信息
             </div>
             <div class="list-group list-group-sm">
@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-lg btn-primary btn-block" id="login_btn" data-loading-text="登录中...">立即登录</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" id="signInBtn" data-loading-text="登录中...">立即登录</button>
             <div class="text-center m-t m-b">
             	<span class="left">记住我：</span>
                 <input id="checkbox" type="checkbox" name="checkbox"/>
@@ -64,78 +64,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="text-center">
         <p>
             <small class="text-muted">
-                <a href="" target="_blank">云卫士</a><br> All Rights Reserved &copy; 2016
+                <a href="#" target="_blank">电票贩</a><br> All Rights Reserved &copy; 2017
             </small>
         </p>
     </div>
 </div>
 </body>
 <!-- jQuery 3.1.1 -->
-<script src="${pageContext.request.contextPath}/static/plugins/jQuery/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/dist/jQuery/jquery-3.1.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
 <script>
 $(function () {
-    var $error_msg = $("#error_msg");
+    var $errorMsg = $("#errorMsg");
 
-    var show_error = function (error_msg) {
-        $error_msg.text(error_msg).removeClass("invisible");
+    var showError = function (errorMsg) {
+        $errorMsg.text(errorMsg).removeClass("invisible");
     };
 
-    $("#login_form").submit(function () {
-        $error_msg.addClass("invisible")
+    $("#signInForm").submit(function () {
+        $errorMsg.addClass("invisible")
         var userName = $.trim($("#userName").val());
         var password = $.trim($("#password").val());
         var captcha = $.trim($("#captcha").val());
         var u_pattern = /^[a-zA-Z0-9_@]{4,20}$/;
         var c_pattern = /^[a-zA-Z0-9]{4}$/;
         if (!u_pattern.test(userName)) {
-            show_error("请输入正确格式的用户名");
+            showError("请输入正确格式的用户名");
             return false;
         }
         if (password == "") {
-            show_error("请输入密码");
+            showError("请输入密码");
             return false;
         }
         if (!u_pattern.test(password)) {
-            show_error("请输入正确格式的密码");
+            showError("请输入正确格式的密码");
             return false;
         }
         if (!c_pattern.test(captcha)) {
-            show_error("请输入正确格式的验证码");
+            showError("请输入正确格式的验证码");
             return false;
         }
-        var login_btn = $("#login_btn");
+        var $signInBtn = $("#signInBtn");
         $.ajax({
-            url: "/Xungeng/admin/login",
+            url: "admin/signIn",
             type: "POST",
             data: {
                 userName: userName,
                 password: password,
                 captcha: captcha,
-                checkbox:$("#checkbox").prop("checked")
+                checkbox: $("#checkbox").prop("checked")
             },
             dataType: "json",
             beforeSend: function () {
-                login_btn.button("loading");
+                $signInBtn.button("loading");
             },
             complete: function () {
                 //重置登录按钮
-                login_btn.button("reset");
+                $signInBtn.button("reset");
                 //重置验证码
                 $("#randImage").trigger("click");
             },
             success: function (data) {
-            	if(data.result==""){
-            		window.location.href ="/Xungeng/admin/index";
+            	if(data.result == ""){
+            		window.location.href ="admin/index";
             	}else{
-                    show_error(data.result);
+                    showError(data.result);
             	}
             },
             error: function (XMLHttpRequest, textStatus) {
                 if (textStatus == "timeout") {
-                    show_error("登录超时");
+                    showError("登录超时");
                 } else {
-                    show_error("登录失败");
+                    showError("登录失败");
                 }
             }
         });

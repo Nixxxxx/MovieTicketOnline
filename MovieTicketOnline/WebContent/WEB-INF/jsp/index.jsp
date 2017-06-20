@@ -17,31 +17,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
   <!-- logo -->
-  <link rel="shortcut icon" href="/static/dist/img/favicon.ico">
+  <link rel="shortcut icon" href="/MovieTicketOnline/static/dist/img/favicon.ico">
   <!--  jQuery 3.1.1 -->
-  <script src="static/plugins/jQuery/jquery-3.1.1.min.js"></script>
+  <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
   <!--  Bootstrap 3.3.6  -->
   <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
-  <script src="static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/MovieTicketOnline/static/bootstrap/js/bootstrap.min.js"></script>
   <!--  Font Awesome  -->
   <link rel="stylesheet" href="static/plugins/font-awesome/css/font-awesome.min.css">
   <!--  Select2  -->
   <link rel="stylesheet" href="static/plugins/select2/select2.min.css">
-  <script src="static/plugins/select2/select2.full.min.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/select2/select2.full.min.js"></script>
   <!--  bootstrap datepicker  -->
-  <link rel="stylesheet" href="static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
-  <script src="static/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-  <script src="static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+  <link rel="stylesheet" href="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
   <!--  Slimscroll  -->
-  <script src="static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
   <!--  Theme style  -->
-  <link rel="stylesheet" href="static/dist/css/AdminLTE.css">
+  <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/AdminLTE.css">
   <!--  AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="static/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/skins/_all-skins.min.css">
   <!--  AdminLTE App  -->
-  <script src="static/dist/js/app.min.js"></script>
+  <script src="/MovieTicketOnline/static/dist/js/app.min.js"></script>
   <!--  AdminLTE for demo purposes  -->
-  <script src="static/dist/js/demo.js"></script>
+  <script src="/MovieTicketOnline/static/dist/js/demo.js"></script>
 
 
 
@@ -95,14 +95,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <span class="label label-warning">0</span> </a>
             <ul class="dropdown-menu">
               <li class="header">no notice</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <!--<ul class="menu">
-                  <li>
-                    <a href="javascript:void(0);"> <i class="fa fa-users text-aqua"></i> no notice </a>
-                  </li>
-                </ul>-->
-              </li>
               <li class="footer"><a href="javascript:void(0);">View all</a></li>
             </ul>
           </li>
@@ -119,23 +111,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	${admin.adminName }-超级管理员
                 </p>
               </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-5">上次登录时间</div>
-                  <div class="col-xs-7">${admin.addTime }</div>
-                  <div class="col-xs-5">上次登录IP</div>
-                  <div class="col-xs-7">${admin.lastLoginIp }</div>
-                </div>
-                <!-- /.row -->
-              </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="javascript:void(0)" class="btn btn-success btn-flat">修改信息</a>
                 </div>
                 <div class="pull-right">
-                  <a href="/Xungeng/admin/logout" class="btn btn-info btn-flat">退出登录</a>
+                  <a href="/Xungeng/admin/signOut" class="btn btn-info btn-flat">退出登录</a>
                 </div>
               </li>
             </ul>
@@ -164,9 +146,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <i class="fa fa-angle-left pull-right"></i>
           </span> </a>
           <ul class="treeview-menu">
-            <li><a href="/Xungeng/patrol/showTaskAdd" target="container"><i class="fa fa-circle-o"></i> 指派任务 </a></li>
-            <li><a href="/Xungeng/patrol/showTaskList" target="container"><i class="fa fa-circle-o"></i> 任务列表 </a></li>
-            <li><a href="/Xungeng/patrol/showRecordList" target="container"><i class="fa fa-circle-o"></i> 巡更记录 </a></li>
+            <li><a href="" target="container"><i class="fa fa-circle-o"></i> 订单处理 </a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -174,8 +154,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
 	        <ul class="treeview-menu">
-	          <li><a href="/Xungeng/member/showAdd" target="container"><i class="fa fa-circle-o"></i> 添加人员 </a></li>
-	          <li><a href="/Xungeng/member/showList" target="container"><i class="fa fa-circle-o"></i> 人员列表 </a></li>
+	          <li><a href="" target="container"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+	          <li><a href="" target="container"><i class="fa fa-circle-o"></i> 用户列表 </a></li>
 	        </ul>
         </li>
         <li class="treeview">
@@ -183,8 +163,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="/Xungeng/device/showAdd" target="container"><i class="fa fa-circle-o"></i> 添加设备 </a></li>
-              <li><a href="/Xungeng/device/showList" target="container"><i class="fa fa-circle-o"></i> 设备列表 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 添加电影 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 电影列表 </a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -192,8 +172,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="/Xungeng/location/showAdd" target="container"><i class="fa fa-circle-o"></i> 添加地点 </a></li>
-              <li><a href="/Xungeng/location/showList" target="container"><i class="fa fa-circle-o"></i> 地点列表 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 添加影院 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 影院列表 </a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -201,8 +181,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="/Xungeng/ttime/showAdd" target="container"><i class="fa fa-circle-o"></i> 添加时段 </a></li>
-              <li><a href="/Xungeng/ttime/showList" target="container"><i class="fa fa-circle-o"></i> 时段列表 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 添加时段 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 时段列表 </a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -210,8 +190,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="/Xungeng/admin/showSetting" target="container"><i class="fa fa-circle-o"></i> 管理员设置 </a></li>
-              <li><a href="/Xungeng/admin/showMessage" target="container"><i class="fa fa-circle-o"></i> 短信提醒 </a></li>
+              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 管理员设置 </a></li>
             </ul>
         </li>
         <li class="header">THEMES</li>
