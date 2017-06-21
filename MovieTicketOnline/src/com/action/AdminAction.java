@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.entity.Admin;
+import com.entity.PageBean;
 import com.service.AdminService;
 import com.util.MD5Util;
+import com.util.PageUtil;
 import com.util.ResponseUtil;
+import com.util.StringUtil;
 
 import net.sf.json.JSONObject;
 
@@ -70,5 +73,32 @@ public class AdminAction {
 	@RequestMapping(value="/index")
 	public ModelAndView signIned(){
 		return new ModelAndView("index");
+	}
+	
+	@RequestMapping(value="/list")
+	public ModelAndView showList(Admin s_admin,HttpServletRequest request){
+		ModelAndView mav=new ModelAndView("/admin/list");
+		String page=request.getParameter("page");
+		if(StringUtil.isEmpty(page)){
+			page="1";
+		}else{
+			s_admin=(Admin) request.getSession().getAttribute("s_admin");
+		}
+		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
+		List<Admin> adminList=adminService.find(pageBean, s_admin);
+		int total=adminService.findAll().size();
+		String pageCode=PageUtil.rootPageTion("admin/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+		mav.addObject("pageCode", pageCode);
+		mav.addObject("adminList", adminList);
+		return mav;
+	}
+	
+	@RequestMapping(value="/signOut")
+	public ModelAndView signOut(HttpServletRequest request){
+		Admin admin=(Admin) request.getSession().getAttribute("admin");
+		if(admin!=null){
+			request.getSession().removeAttribute("admin");
+		}
+		return new ModelAndView("../../signIn");
 	}
 }

@@ -16,6 +16,11 @@ public class Cinema {
 	String cinemaName;
 	String address;
 	
+	public Cinema(String cinemaName, String address) {
+		this.cinemaName = cinemaName;
+		this.address = address;
+	}
+	
 	@Id
 	@Column(name="cinemaId",nullable=false,unique=true)
 	@GenericGenerator(name="generator",strategy="native")

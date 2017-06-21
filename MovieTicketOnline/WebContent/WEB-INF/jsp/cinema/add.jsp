@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>无线巡更管理中心</title>
+  <title>电票贩</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
@@ -119,7 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var $addBtn = $("#cinemaAddButton");
 
             $.ajax({
-                url: "cinema/insert",
+                url: "cinema/save",
                 type: "POST",
                 dataType: "json",
                 data: $cinemaAddForm.serialize(),
