@@ -39,11 +39,11 @@ public class AdminDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public Admin signIn(String userName,String password){
+	public Admin signIn(String adminName,String password){
 		Admin user=null;
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
-		Query query=session.createQuery("from admin u where u.username = ? and u.password =?");
-		query.setParameter("username", userName);
+		Query query=session.createQuery("from admin u where u.adminName = ? and u.password =?");
+		query.setParameter("adminName", adminName);
 		query.setParameter("password", password);
 		@SuppressWarnings("unchecked")
 		List<Admin> lists=query.list();
@@ -54,7 +54,7 @@ public class AdminDao {
 		return user;
 	}
 	
-	public boolean save(Admin admin){
+	public boolean insert(Admin admin){
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
 		Transaction tx=session.beginTransaction();
 		session.save(admin);
@@ -94,7 +94,7 @@ public class AdminDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Admin> find(PageBean pageBean, Admin s_admin){
+	public List<Admin> findPage(PageBean pageBean, Admin s_admin){
 		StringBuffer sb=new StringBuffer("from Admin");
 //		if(s_admin!=null){
 //			if(StringUtil.isNotEmpty(s_admin.getNumber())){

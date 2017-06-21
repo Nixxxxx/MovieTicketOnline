@@ -13,10 +13,12 @@ import org.hibernate.annotations.GenericGenerator;
 public class Cinema {
 
 	int cinemaId;
+	String number;
 	String cinemaName;
 	String address;
 	
-	public Cinema(String cinemaName, String address) {
+	public Cinema(String number, String cinemaName, String address) {
+		this.number = number;
 		this.cinemaName = cinemaName;
 		this.address = address;
 	}
@@ -32,6 +34,15 @@ public class Cinema {
 		this.cinemaId = cinemaId;
 	}
 	
+	@Column(name="number",nullable=false,length=40)
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
 	@Column(name="cinemaName",nullable=false,length=40)
 	public String getCinemaName() {
 		return cinemaName;

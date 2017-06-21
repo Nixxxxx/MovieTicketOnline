@@ -15,7 +15,15 @@ public class User {
 	int userId;
 	String userName;
 	String password;
+	String email;
+	String mobile;
 	
+	public User(String userName, String password, String email, String mobile) {
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.mobile = mobile;
+	}
 	@Id
 	@Column(name="userId",nullable=false,unique=true)
 	@GenericGenerator(name="generator",strategy="native")
@@ -41,6 +49,22 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	@Column(name="email",nullable=false,length=10)
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	@Column(name="mobile",nullable=false,length=10)
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	
 	

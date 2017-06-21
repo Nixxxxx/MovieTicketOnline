@@ -32,24 +32,24 @@ public class AdminService {
 		return adminDao.signIn(adminName, password);
 	}
 	
-	public boolean save(Admin admin){
-		return adminDao.save(admin);
+	public boolean changePassword(int adminId,String password) {
+		return adminDao.changePassword(adminId, password);
+	}
+	
+	public boolean insert(Admin admin){
+		return adminDao.insert(admin);
 	}
 
 	public boolean update(Admin admin) {
 		return adminDao.update(admin);
-	}
-	
-	public boolean changePassword(int adminId,String password) {
-		return adminDao.changePassword(adminId, password);
 	}
 
 	public boolean delete(int adminId) {
 		return adminDao.delete(adminId);
 	}
 	
-	public List<Admin> find(PageBean pageBean,Admin s_admin){
-		return adminDao.find(pageBean, s_admin);
+	public List<Admin> findPage(PageBean pageBean,Admin s_admin){
+		return adminDao.findPage(pageBean, s_admin);
 	}
 	
 	public List<Admin> findAll(){

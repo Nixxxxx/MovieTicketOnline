@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>电票贩</title>
+  <title>无线巡更管理中心</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
@@ -55,13 +55,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </style>
 </head>
 <body>
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li>影院管理</li>
-    <li class="active">添加影院</li>
+    <li class="active">系统总览</li>
   </ol>
 </section>
 
@@ -69,83 +67,99 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <section class="content">
   <!-- Small boxes (Stat box) -->
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <!-- Horizontal Form -->
-      <div class="box box-info">
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>${taskNumbers[0] }</h3>
+          <p>已完成任务</p>
+        </div>
+        <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-aqua">
+        <div class="inner">
+          <h3>${taskNumbers[1] }</h3>
+          <p>待完成任务</p>
+        </div>
+        <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>${taskNumbers[2] }</h3>
+          <p>未按时完成任务</p>
+        </div>
+        <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3>${taskNumbers[3] }</h3>
+          <p>未完成任务</p>
+        </div>
+        <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">添加影院</h3>
+          <h3 class="box-title">服务器基本信息</h3>
         </div>
         <!-- /.box-header -->
-        <!-- form start -->
-        <form class="form-horizontal" method="post" id="cinemaInsertForm">
-          <div class="box-body">
-            <div class="form-group">
-              <label for="location_number" class="col-sm-2 control-label">编号</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinemaId" name="number" placeholder="请输入地点编号" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="cinemaName" class="col-sm-2 control-label">影院名称</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinemaName" name="cinemaName" maxlength="10" placeholder="请输入地点名" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="cinemaAddress" class="col-sm-2 control-label">地址</label>
-              <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="cinemaAddress" name="address" placeholder="请输入备注，100字以内，选填"></textarea>
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="cinemaInsertButton" data-loading-text="添加中...">添加</button>
-          </div>
-          <!-- /.box-footer -->
-        </form>
+        <div class="box-body table-responsive">
+          <table class="table table-bordered">
+            <colgroup class="row">
+              <col class="col-xs-2">
+              <col class="col-xs-4">
+              <col class="col-xs-2">
+              <col class="col-xs-4">
+            </colgroup>
+            <tr>
+              <td>服务器操作系统：</td>
+              <td>Windows Server</td>
+              <td>服务器IP：</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Web 服务器：</td>
+              <td>apache-tomcat-7.0.72</td>
+              <td>Java 版本：</td>
+              <td>1.8.0_73</td>
+            </tr>
+            <tr>
+              <td>MySQL 版本：</td>
+              <td>5.5.8</td>
+              <td>当前时区：</td>
+              <td>Asia/Shanghai</td>
+            </tr>
+            <tr>
+              <td>文件上传最大：</td>
+              <td>50M</td>
+              <td>软件版本：</td>
+              <td>V1.0 beta</td>
+            </tr>
+          </table>
+        </div>
+        <!-- /.box-body -->
       </div>
       <!-- /.box -->
     </div>
   </div>
+  <!-- /.row -->
 </section>
 <!-- /.content -->
-<script type="text/javascript">
-    $(function () {
-        var $cinemaInsertForm = $("#cinemaInsertForm");
-        $cinemaInsertForm.submit(function () {
-
-            var $insertBtn = $("#cinemaInsertButton");
-
-            $.ajax({
-                url: "cinema/insert",
-                type: "POST",
-                dataType: "json",
-                data: $cinemaInsertForm.serialize(),
-                beforeSend: function () {
-                    $insertBtn.button("loading");
-                },
-                complete: function () {
-                    $insertBtn.button("reset");
-                },
-                success: function (data) {
-                    alert(data.msg);
-                    if (data.success) {
-                        $cinemaInsertForm[0].reset();
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus) {
-                    if (textStatus === "timeout") {
-                        alert("添加超时！");
-                    } else {
-                        alert("添加失败！");
-                    }
-                }
-            });
-            return false;
-        });
-    })
-</script>
 </body>
 </html>

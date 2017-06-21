@@ -15,6 +15,15 @@ public class Admin {
 	int adminId;
 	String adminName;
 	String password;
+	String email;
+	String mobile;
+	
+	public Admin(String adminName, String password, String email, String mobile) {
+		this.adminName = adminName;
+		this.password = password;
+		this.email = email;
+		this.mobile = mobile;
+	}
 	
 	@Id
 	@Column(name="adminId",nullable=false,unique=true)
@@ -41,6 +50,24 @@ public class Admin {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name="email",nullable=false,length=10)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name="mobile",nullable=false,length=10)
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 	
 	

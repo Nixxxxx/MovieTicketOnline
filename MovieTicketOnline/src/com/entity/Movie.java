@@ -1,7 +1,5 @@
 package com.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,11 +12,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="movie")
 public class Movie {
 
-	int movieId;
-	String movieName;
-	int status;
-	String introduce;
-	Date time;
+	private int movieId;
+	private String number;
+	private String movieName;
+	private String time;
+	private String status;
+	private String introduce;
+	
+	public Movie(String number, String movieName, String time, String status, String introduce) {
+		this.number = number;
+		this.movieName = movieName;
+		this.time = time;
+		this.status = status;
+		this.introduce = introduce;
+	}
 	
 	@Id
 	@Column(name="movieId",nullable=false,unique=true)
@@ -31,6 +38,14 @@ public class Movie {
 		this.movieId = movieId;
 	}
 	
+	@Column(name="number",nullable=false,length=40)
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
 	@Column(name="movieName",nullable=false,length=40)
 	public String getMovieName() {
 		return movieName;
@@ -39,11 +54,18 @@ public class Movie {
 		this.movieName = movieName;
 	}
 	
+	@Column(name="status",nullable=false,length=4)
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	@Column(name="status",nullable=false,length=1)
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
@@ -53,14 +75,6 @@ public class Movie {
 	}
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
-	}
-	
-	@Column(name="time",nullable=false,length=40)
-	public Date getTime() {
-		return time;
-	}
-	public void setTime(Date time) {
-		this.time = time;
 	}
 	
 }

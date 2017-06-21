@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.dao.CinemaDao;
 import com.entity.Cinema;
 import com.entity.PageBean;
 
+@Service
 public class CinemaService {
 
 	@Resource

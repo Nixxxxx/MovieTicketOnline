@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.entity.Admin;
 import com.entity.PageBean;
-import com.service.AdminService;
+import com.entity.User;
+import com.service.UserService;
 import com.util.MD5Util;
 import com.util.PageUtil;
 import com.util.ResponseUtil;
@@ -22,40 +22,41 @@ import com.util.StringUtil;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping(value="/admin")
-public class AdminAction {
+@RequestMapping(name="/user")
+public class UserAction {
+
 
 	@Autowired
-	private AdminService adminService;
+	private UserService userService;
 	
 	private String msg;
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	
 
-	public AdminService getAdminService() {
-		return adminService;
+	public UserService getUserService() {
+		return userService;
 	}
 
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 	
 	@RequestMapping(value="/signIn")
 	public void login(String userName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
-		List<Admin> admins=adminService.findAll();
+		List<User> users=userService.findAll();
 		String sRand=(String)request.getSession().getAttribute("sRand");
 		int flag=0;
 		String result="";
 		JSONObject resultJson=new JSONObject();
 		if(captcha.equalsIgnoreCase(sRand)){
 			flag=1;
-			for(Admin admin:admins){
-				if(admin.getAdminName().equals(userName)&&MD5Util.getMD5Code(password).equals(admin.getPassword())){
-					admin=adminService.findByAdminId(admin.getAdminId());
-					request.getSession().setAttribute("admin", admin);
+			for(User user:users){
+				if(user.getUserName().equals(userName)&&MD5Util.getMD5Code(password).equals(user.getPassword())){
+					user=userService.findByUserId(user.getUserId());
+					request.getSession().setAttribute("user", user);
 					if("true".equals(checkbox)){
-						Cookie cookie=new Cookie(admin.getAdminName(),admin.getPassword());
+						Cookie cookie=new Cookie(user.getUserName(),user.getPassword());
 						cookie.setMaxAge(1*60*60*24*7);
 					}
 					flag=2;break;
@@ -77,17 +78,17 @@ public class AdminAction {
 	
 	@RequestMapping(value="/signOut")
 	public ModelAndView signOut(HttpServletRequest request){
-		Admin admin=(Admin) request.getSession().getAttribute("admin");
-		if(admin!=null){
-			request.getSession().removeAttribute("admin");
+		User user=(User) request.getSession().getAttribute("user");
+		if(user!=null){
+			request.getSession().removeAttribute("user");
 		}
 		return new ModelAndView("../../signIn");
 	}
 	
 	public boolean checkUserName(String userName){
-		List<Admin> admins=adminService.findAll();
-		for(Admin admin:admins){
-			if(userName.equals(admin.getAdminName()))
+		List<User> users=userService.findAll();
+		for(User user:users){
+			if(userName.equals(user.getUserName()))
 				return false;
 		}
 		return true;
@@ -97,10 +98,10 @@ public class AdminAction {
 	public void changePassword(HttpServletRequest request,HttpServletResponse response){
 		int id=Integer.parseInt(request.getParameter("id"));
 		String oldPassword=request.getParameter("oldPassword");
-		Admin admin=adminService.findByAdminId(id);
-		if(admin.getPassword().equals(MD5Util.getMD5Code(oldPassword))){
+		User user=userService.findByUserId(id);
+		if(user.getPassword().equals(MD5Util.getMD5Code(oldPassword))){
 			String newPassword=request.getParameter("newPassword");
-			success=adminService.changePassword(id,MD5Util.getMD5Code(newPassword));
+			success=userService.changePassword(id,MD5Util.getMD5Code(newPassword));
 			if(success)
 				msg="修改密码成功";
 			else msg="修改密码失败";
@@ -114,33 +115,32 @@ public class AdminAction {
 	}
 	
 	@RequestMapping(value="/list")
-	public ModelAndView showList(Admin s_admin,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/admin/manage");
+	public ModelAndView showList(User s_user,HttpServletRequest request){
+		ModelAndView mav=new ModelAndView("/user/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
 		}else{
-			s_admin=(Admin) request.getSession().getAttribute("s_admin");
+			s_user=(User) request.getSession().getAttribute("s_user");
 		}
 		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
-		List<Admin> adminList=adminService.findPage(pageBean, s_admin);
-		int total=adminService.findAll().size();
-		String pageCode=PageUtil.rootPageTion("admin/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+		List<User> userList=userService.findPage(pageBean, s_user);
+		int total=userService.findAll().size();
+		String pageCode=PageUtil.rootPageTion("user/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
 		mav.addObject("pageCode", pageCode);
-		mav.addObject("adminList", adminList);
+		mav.addObject("userList", userList);
 		return mav;
 	}
 	
-	
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
-		String adminName=request.getParameter("adminName");
-		if(checkUserName(adminName)){
+		String userName=request.getParameter("userName");
+		if(checkUserName(userName)){
 			String password=request.getParameter("password");
 			String email=request.getParameter("email");
 			String mobile=request.getParameter("mobile");
-			Admin admin=new Admin(adminName,MD5Util.getMD5Code(password),email,mobile);
-			success=adminService.insert(admin);
+			User user=new User(userName,MD5Util.getMD5Code(password),email,mobile);
+			success=userService.insert(user);
 			if(success)
 				msg="添加成功";
 			else msg="添加失败";
@@ -156,12 +156,12 @@ public class AdminAction {
 	@RequestMapping(value="/update")
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int id=Integer.parseInt(request.getParameter("id"));
-		Admin admin=adminService.findByAdminId(id);
-		if(checkUserName(request.getParameter("adminName"))){
-			admin.setAdminName(request.getParameter("adminName"));
-			admin.setEmail(request.getParameter("email"));
-			admin.setMobile(request.getParameter("mobile"));
-			success=adminService.update(admin);
+		User user=userService.findByUserId(id);
+		if(checkUserName(request.getParameter("userName"))){
+			user.setUserName(request.getParameter("userName"));
+			user.setEmail(request.getParameter("email"));
+			user.setMobile(request.getParameter("mobile"));
+			success=userService.update(user);
 			if(success)
 				msg="修改成功";
 			else msg="修改失败";
@@ -176,8 +176,8 @@ public class AdminAction {
 	
 	@RequestMapping(value="/del")
 	public void delete(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("adminId"));
-		success=adminService.delete(id);
+		int id=Integer.parseInt(request.getParameter("userId"));
+		success=userService.delete(id);
 		if(success)
 			msg="删除成功";
 		else msg="删除失败";
@@ -186,4 +186,5 @@ public class AdminAction {
 		ResponseUtil.writeJson(response,resultJson);
 	}
 
+	
 }

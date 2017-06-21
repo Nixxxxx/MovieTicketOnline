@@ -60,8 +60,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li>影院管理</li>
-    <li class="active">添加影院</li>
+    <li>电影管理</li>
+    <li class="active">添加电影</li>
   </ol>
 </section>
 
@@ -73,11 +73,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- Horizontal Form -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">添加影院</h3>
+          <h3 class="box-title">添加电影</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="cinemaInsertForm">
+        <form class="form-horizontal" method="post" id="movieAddForm">
           <div class="box-body">
             <div class="form-group">
               <label for="location_number" class="col-sm-2 control-label">编号</label>
@@ -86,13 +86,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
             <div class="form-group">
-              <label for="cinemaName" class="col-sm-2 control-label">影院名称</label>
+              <label for="cinemaName" class="col-sm-2 control-label">电影名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinemaName" name="cinemaName" maxlength="10" placeholder="请输入地点名" required>
+                <input type="text" class="form-control" id="movieName" name="cinemaName" maxlength="10" placeholder="请输入地点名" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="cinemaAddress" class="col-sm-2 control-label">地址</label>
+              <label for="cinemaAddress" class="col-sm-2 control-label">简介</label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="3" id="cinemaAddress" name="address" placeholder="请输入备注，100字以内，选填"></textarea>
               </div>
@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="cinemaInsertButton" data-loading-text="添加中...">添加</button>
+            <button type="submit" class="btn btn-info pull-right" id="movieInsertButton" data-loading-text="添加中...">添加</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -113,16 +113,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        var $cinemaInsertForm = $("#cinemaInsertForm");
-        $cinemaInsertForm.submit(function () {
+        var $movieAddForm = $("#movieAddForm");
+        $movieAddForm.submit(function () {
 
-            var $insertBtn = $("#cinemaInsertButton");
+            var $insertBtn = $("#movieInsertButton");
 
             $.ajax({
-                url: "cinema/insert",
+                url: "movie/insert",
                 type: "POST",
                 dataType: "json",
-                data: $cinemaInsertForm.serialize(),
+                data: $movieAddForm.serialize(),
                 beforeSend: function () {
                     $insertBtn.button("loading");
                 },
@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        $cinemaInsertForm[0].reset();
+                        $movieAddForm[0].reset();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

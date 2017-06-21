@@ -60,8 +60,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li>影院管理</li>
-    <li class="active">添加影院</li>
+    <li>系统管理</li>
+    <li class="active">添加管理员</li>
   </ol>
 </section>
 
@@ -73,11 +73,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- Horizontal Form -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">添加影院</h3>
+          <h3 class="box-title">添加管理员</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="cinemaInsertForm">
+        <form class="form-horizontal" method="post" id="adminAddForm">
           <div class="box-body">
             <div class="form-group">
               <label for="location_number" class="col-sm-2 control-label">编号</label>
@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="cinemaInsertButton" data-loading-text="添加中...">添加</button>
+            <button type="submit" class="btn btn-info pull-right" id="adminInsertButton" data-loading-text="添加中...">添加</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -113,16 +113,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        var $cinemaInsertForm = $("#cinemaInsertForm");
-        $cinemaInsertForm.submit(function () {
+        var $adminAddForm = $("#adminAddForm");
+        $adminAddForm.submit(function () {
 
-            var $insertBtn = $("#cinemaInsertButton");
+            var $insertBtn = $("#adminInsertButton");
 
             $.ajax({
-                url: "cinema/insert",
+                url: "admin/insert",
                 type: "POST",
                 dataType: "json",
-                data: $cinemaInsertForm.serialize(),
+                data: $adminAddForm.serialize(),
                 beforeSend: function () {
                     $insertBtn.button("loading");
                 },
@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        $cinemaInsertForm[0].reset();
+                        $adminAddForm[0].reset();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
