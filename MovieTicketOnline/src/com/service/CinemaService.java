@@ -24,17 +24,20 @@ public class CinemaService {
 		this.cinemaDao = cinemaDao;
 	}
 
-	public boolean save(Cinema cinema){
-		return cinemaDao.save(cinema);
+	public boolean insert(Cinema cinema){
+		return cinemaDao.insert(cinema);
+	}
+
+	public boolean delete(int cinemaId) {
+		return cinemaDao.delete(cinemaId);
 	}
 
 	public boolean update(Cinema cinema) {
 		return cinemaDao.update(cinema);
 	}
-	
 
-	public boolean delete(int cinemaId) {
-		return cinemaDao.delete(cinemaId);
+	public List<Cinema> findPage(PageBean pageBean, Cinema s_cinema) {
+		return cinemaDao.findPage(pageBean, s_cinema);
 	}
 	
 	public List<Cinema> findAll(){
@@ -43,10 +46,6 @@ public class CinemaService {
 	
 	public Cinema findByCinemaId(int cinemaId){
 		return cinemaDao.findByCinemaId(cinemaId);
-	}
-
-	public List<Cinema> findPage(PageBean pageBean, Cinema s_cinema) {
-		return cinemaDao.findPage(pageBean, s_cinema);
 	}
 	
 }

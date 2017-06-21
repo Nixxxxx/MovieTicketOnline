@@ -12,10 +12,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="cinema")
 public class Cinema {
 
-	int cinemaId;
-	String number;
-	String cinemaName;
-	String address;
+	private int cinemaId;
+	private String number;
+	private String cinemaName;
+	private String address;
 	
 	public Cinema(String number, String cinemaName, String address) {
 		this.number = number;

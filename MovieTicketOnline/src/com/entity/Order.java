@@ -1,5 +1,7 @@
 package com.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,13 +14,21 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="order")
 public class Order {
 
-	int orderId;
-	int userId;
-	int movieId;
-	int number;
-	String address;
-	String mobile;
+	private int orderId;
+	private int userId;
+	private int movieId;
+	private Date startTime;
+	private int amount;
+	private String address;
+	private String mobile;
 	
+	
+	public Order(Date startTime, int amount, String adress, String mobile) {
+		this.startTime = startTime;
+		this.amount = amount;
+		this.address = adress;
+		this.mobile = mobile;
+	}
 	
 	@Id
 	@Column(name="orderId",nullable=false,unique=true)
@@ -47,12 +57,20 @@ public class Order {
 		this.movieId = movieId;
 	}
 	
-	@Column(name="number",nullable=false,length=2)
-	public int getNumber() {
-		return number;
+	@Column(name="startTime",nullable=false)
+	public Date getStartTime() {
+		return startTime;
 	}
-	public void setNumber(int number) {
-		this.number = number;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	
+	@Column(name="amount",nullable=false,length=2)
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int number) {
+		this.amount = number;
 	}
 	
 	@Column(name="address",nullable=false,length=40)

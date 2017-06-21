@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.dao.AdminDao;
 import com.entity.Admin;
 import com.entity.PageBean;
+import com.util.StringUtil;
 
 @Service
 public class AdminService {
@@ -26,26 +27,26 @@ public class AdminService {
 	}
 
 	public Admin signIn(String adminName,String password){
-		if(adminName==""||adminName==null||password==""||password==null){
+		if(StringUtil.isEmpty(adminName) || StringUtil.isEmpty(password)){
 			return null;
 		}
 		return adminDao.signIn(adminName, password);
-	}
-	
-	public boolean changePassword(int adminId,String password) {
-		return adminDao.changePassword(adminId, password);
 	}
 	
 	public boolean insert(Admin admin){
 		return adminDao.insert(admin);
 	}
 
+	public boolean delete(int adminId) {
+		return adminDao.delete(adminId);
+	}
+
 	public boolean update(Admin admin) {
 		return adminDao.update(admin);
 	}
-
-	public boolean delete(int adminId) {
-		return adminDao.delete(adminId);
+	
+	public boolean changePassword(int adminId,String password) {
+		return adminDao.changePassword(adminId, password);
 	}
 	
 	public List<Admin> findPage(PageBean pageBean,Admin s_admin){

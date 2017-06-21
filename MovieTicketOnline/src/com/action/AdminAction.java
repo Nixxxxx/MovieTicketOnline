@@ -32,13 +32,17 @@ public class AdminAction {
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	
-
 	public AdminService getAdminService() {
 		return adminService;
 	}
 
 	public void setAdminService(AdminService adminService) {
 		this.adminService = adminService;
+	}
+	
+	@RequestMapping(value="/add")
+	public ModelAndView add(){
+		return new ModelAndView("/admin/add");
 	}
 	
 	@RequestMapping(value="/signIn")
@@ -72,7 +76,7 @@ public class AdminAction {
 	
 	@RequestMapping(value="/index")
 	public ModelAndView signIned(){
-		return new ModelAndView("index");
+		return new ModelAndView("/index");
 	}
 	
 	@RequestMapping(value="/signOut")
@@ -95,12 +99,12 @@ public class AdminAction {
 	
 	@RequestMapping(value="/changePassword")
 	public void changePassword(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("id"));
+		int adminId=Integer.parseInt(request.getParameter("adminId"));
 		String oldPassword=request.getParameter("oldPassword");
-		Admin admin=adminService.findByAdminId(id);
+		Admin admin=adminService.findByAdminId(adminId);
 		if(admin.getPassword().equals(MD5Util.getMD5Code(oldPassword))){
 			String newPassword=request.getParameter("newPassword");
-			success=adminService.changePassword(id,MD5Util.getMD5Code(newPassword));
+			success=adminService.changePassword(adminId,MD5Util.getMD5Code(newPassword));
 			if(success)
 				msg="修改密码成功";
 			else msg="修改密码失败";
@@ -152,11 +156,23 @@ public class AdminAction {
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
 	}
+	
+	@RequestMapping(value="/del")
+	public void delete(HttpServletRequest request,HttpServletResponse response){
+		int adminId=Integer.parseInt(request.getParameter("adminId"));
+		success=adminService.delete(adminId);
+		if(success)
+			msg="删除成功";
+		else msg="删除失败";
+		resultJson.put("msg",msg);
+		resultJson.put("success", success);
+		ResponseUtil.writeJson(response,resultJson);
+	}
 
 	@RequestMapping(value="/update")
 	public void update(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("id"));
-		Admin admin=adminService.findByAdminId(id);
+		int adminId=Integer.parseInt(request.getParameter("adminId"));
+		Admin admin=adminService.findByAdminId(adminId);
 		if(checkUserName(request.getParameter("adminName"))){
 			admin.setAdminName(request.getParameter("adminName"));
 			admin.setEmail(request.getParameter("email"));
@@ -169,18 +185,6 @@ public class AdminAction {
 			success=false;
 			msg="用户名已存在";
 		}
-		resultJson.put("msg",msg);
-		resultJson.put("success", success);
-		ResponseUtil.writeJson(response,resultJson);
-	}
-	
-	@RequestMapping(value="/del")
-	public void delete(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("adminId"));
-		success=adminService.delete(id);
-		if(success)
-			msg="删除成功";
-		else msg="删除失败";
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);

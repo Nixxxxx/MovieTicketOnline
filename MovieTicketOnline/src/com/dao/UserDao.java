@@ -63,6 +63,16 @@ public class UserDao {
 		return true;
 	}
 	
+	public boolean delete(int userId){
+		User user=this.findByUserId(userId);
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tr=session.beginTransaction();
+		session.delete(user); 
+		tr.commit();
+		session.close();
+		return true;
+	}
+	
 	public boolean update(User user){
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
 		Transaction tx=session.beginTransaction();
@@ -72,23 +82,13 @@ public class UserDao {
 		return true;
 	}
 	
-	public boolean changePassword(int id,String password){
-		User user=this.findByUserId(id);
+	public boolean changePassword(int userId,String password){
+		User user=this.findByUserId(userId);
 		user.setPassword(password);
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
 		Transaction tx=session.beginTransaction();
 		session.merge(user);
 		tx.commit();
-		session.close();
-		return true;
-	}
-	
-	public boolean delete(int id){
-		User user=this.findByUserId(id);
-		Session session=getHibernateTemplate().getSessionFactory().openSession();
-		Transaction tr=session.beginTransaction();
-		session.delete(user); 
-		tr.commit();
 		session.close();
 		return true;
 	}

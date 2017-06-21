@@ -20,11 +20,11 @@ import com.util.StringUtil;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping(name="/movie")
+@RequestMapping(value="/movie")
 public class MovieAction {
 
 	@Autowired
-	private MovieService movieService = new MovieService();
+	private MovieService movieService;
 
 	private String msg;
 	private boolean success;
@@ -36,6 +36,11 @@ public class MovieAction {
 
 	public void setMovieService(MovieService movieService) {
 		this.movieService = movieService;
+	}
+	
+	@RequestMapping(value="/add")
+	public ModelAndView add(){
+		return new ModelAndView("/movie/add");
 	}
 	
 	@RequestMapping(value="/list")
@@ -56,6 +61,14 @@ public class MovieAction {
 		return mav;
 	}
 	
+	public boolean checkNumber(String number){
+		List<Movie> movies = movieService.findAll();
+		for(Movie movie:movies){
+			if(number.equals(movie.getNumber()))
+				return false;
+		}
+		return true;
+	}
 	
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
@@ -66,6 +79,18 @@ public class MovieAction {
 		String introduce = request.getParameter("introduce");
 		Movie movie = new Movie(number, movieName, time, status, introduce);
 		movieService.insert(movie);
+		resultJson.put("msg",msg);
+		resultJson.put("success", success);
+		ResponseUtil.writeJson(response,resultJson);
+	}
+	
+	@RequestMapping(value="/del")
+	public void delete(HttpServletRequest request,HttpServletResponse response){
+		int movieId=Integer.parseInt(request.getParameter("movieId"));
+		success = movieService.delete(movieId);
+		if(success)
+			msg = "删除成功";
+		else msg ="删除失败";
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
@@ -93,27 +118,6 @@ public class MovieAction {
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
-	}
-	
-	@RequestMapping(value="/del")
-	public void delete(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("id"));
-		success=movieService.delete(id);
-		if(success)
-			msg="删除成功";
-		else msg="删除失败";
-		resultJson.put("msg",msg);
-		resultJson.put("success", success);
-		ResponseUtil.writeJson(response,resultJson);
-	}
-	
-	public boolean checkNumber(String number){
-		List<Movie> movies = movieService.findAll();
-		for(Movie movie:movies){
-			if(number.equals(movie.getNumber()))
-				return false;
-		}
-		return true;
 	}
 	
 }

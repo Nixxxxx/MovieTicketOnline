@@ -12,11 +12,11 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="user")
 public class User {
 
-	int userId;
-	String userName;
-	String password;
-	String email;
-	String mobile;
+	private int userId;
+	private String userName;
+	private String password;
+	private String email;
+	private String mobile;
 	
 	public User(String userName, String password, String email, String mobile) {
 		this.userName = userName;
@@ -24,6 +24,7 @@ public class User {
 		this.email = email;
 		this.mobile = mobile;
 	}
+	
 	@Id
 	@Column(name="userId",nullable=false,unique=true)
 	@GenericGenerator(name="generator",strategy="native")
@@ -51,7 +52,7 @@ public class User {
 		this.password = password;
 	}
 	
-	@Column(name="email",nullable=false,length=10)
+	@Column(name="email",nullable=false,length=20)
 	public String getEmail() {
 		return email;
 	}
@@ -59,7 +60,7 @@ public class User {
 		this.email = email;
 	}
 	
-	@Column(name="mobile",nullable=false,length=10)
+	@Column(name="mobile",nullable=false,length=20)
 	public String getMobile() {
 		return mobile;
 	}

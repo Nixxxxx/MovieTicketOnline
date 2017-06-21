@@ -54,7 +54,7 @@ public class Movie {
 		this.movieName = movieName;
 	}
 	
-	@Column(name="status",nullable=false,length=4)
+	@Column(name="time",nullable=false,length=4)
 	public String getTime() {
 		return time;
 	}
@@ -69,7 +69,7 @@ public class Movie {
 		this.status = status;
 	}
 	
-	@Column(name="introduce",nullable=false,length=40)
+	@Column(name="introduce",nullable=false,length=100)
 	public String getIntroduce() {
 		return introduce;
 	}

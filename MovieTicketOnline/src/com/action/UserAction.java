@@ -22,7 +22,7 @@ import com.util.StringUtil;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping(name="/user")
+@RequestMapping(value="/user")
 public class UserAction {
 
 
@@ -40,6 +40,11 @@ public class UserAction {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+	
+	@RequestMapping(value="/add")
+	public ModelAndView add(){
+		return new ModelAndView("/user/add");
 	}
 	
 	@RequestMapping(value="/signIn")
@@ -73,7 +78,7 @@ public class UserAction {
 	
 	@RequestMapping(value="/index")
 	public ModelAndView signIned(){
-		return new ModelAndView("index");
+		return new ModelAndView("/index");
 	}
 	
 	@RequestMapping(value="/signOut")
@@ -96,12 +101,12 @@ public class UserAction {
 	
 	@RequestMapping(value="/changePassword")
 	public void changePassword(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("id"));
+		int userId=Integer.parseInt(request.getParameter("userId"));
 		String oldPassword=request.getParameter("oldPassword");
-		User user=userService.findByUserId(id);
+		User user=userService.findByUserId(userId);
 		if(user.getPassword().equals(MD5Util.getMD5Code(oldPassword))){
 			String newPassword=request.getParameter("newPassword");
-			success=userService.changePassword(id,MD5Util.getMD5Code(newPassword));
+			success=userService.changePassword(userId,MD5Util.getMD5Code(newPassword));
 			if(success)
 				msg="修改密码成功";
 			else msg="修改密码失败";
@@ -116,7 +121,7 @@ public class UserAction {
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showList(User s_user,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/user/list");
+		ModelAndView mav=new ModelAndView("/user/manage");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
@@ -152,11 +157,23 @@ public class UserAction {
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
 	}
+	
+	@RequestMapping(value="/del")
+	public void delete(HttpServletRequest request,HttpServletResponse response){
+		int userId=Integer.parseInt(request.getParameter("userId"));
+		success=userService.delete(userId);
+		if(success)
+			msg="删除成功";
+		else msg="删除失败";
+		resultJson.put("msg",msg);
+		resultJson.put("success", success);
+		ResponseUtil.writeJson(response,resultJson);
+	}
 
 	@RequestMapping(value="/update")
 	public void update(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("id"));
-		User user=userService.findByUserId(id);
+		int userId=Integer.parseInt(request.getParameter("userId"));
+		User user=userService.findByUserId(userId);
 		if(checkUserName(request.getParameter("userName"))){
 			user.setUserName(request.getParameter("userName"));
 			user.setEmail(request.getParameter("email"));
@@ -173,18 +190,5 @@ public class UserAction {
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
 	}
-	
-	@RequestMapping(value="/del")
-	public void delete(HttpServletRequest request,HttpServletResponse response){
-		int id=Integer.parseInt(request.getParameter("userId"));
-		success=userService.delete(id);
-		if(success)
-			msg="删除成功";
-		else msg="删除失败";
-		resultJson.put("msg",msg);
-		resultJson.put("success", success);
-		ResponseUtil.writeJson(response,resultJson);
-	}
 
-	
 }

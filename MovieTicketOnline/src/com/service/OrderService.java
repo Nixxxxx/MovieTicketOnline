@@ -6,46 +6,46 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.dao.CinemaDao;
-import com.entity.Cinema;
+import com.dao.OrderDao;
+import com.entity.Order;
 import com.entity.PageBean;
 
 @Service
 public class OrderService {
 
 	@Resource
-	private CinemaDao cinemaDao;
+	private OrderDao orderDao;
 	
-	public CinemaDao getCinemaDao() {
-		return cinemaDao;
+	public OrderDao getOrderDao() {
+		return orderDao;
 	}
 
-	public void setCinemaDao(CinemaDao cinemaDao) {
-		this.cinemaDao = cinemaDao;
+	public void setOrderDao(OrderDao orderDao) {
+		this.orderDao = orderDao;
 	}
 
-	public boolean save(Cinema cinema){
-		return cinemaDao.save(cinema);
+	public boolean insert(Order order){
+		return orderDao.insert(order);
 	}
 
-	public boolean update(Cinema cinema) {
-		return cinemaDao.update(cinema);
-	}
-	
-
-	public boolean delete(int cinemaId) {
-		return cinemaDao.delete(cinemaId);
+	public boolean delete(int orderId) {
+		return orderDao.delete(orderId);
 	}
 	
-	public List<Cinema> findAll(){
-		return cinemaDao.findAll();
+	public boolean update(Order order) {
+		return orderDao.update(order);
 	}
 	
-	public Cinema findByCinemaId(int cinemaId){
-		return cinemaDao.findByCinemaId(cinemaId);
+	public List<Order> findPage(PageBean pageBean, Order s_order) {
+		return orderDao.findPage(pageBean, s_order);
+	}
+	
+	public List<Order> findAll(){
+		return orderDao.findAll();
+	}
+	
+	public Order findByOrderId(int orderId){
+		return orderDao.findByOrderId(orderId);
 	}
 
-	public List<Cinema> findPage(PageBean pageBean, Cinema s_cinema) {
-		return cinemaDao.findPage(pageBean, s_cinema);
-	}
 }

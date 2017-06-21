@@ -25,16 +25,19 @@ public class MovieService {
 	}
 
 	public boolean insert(Movie movie){
-		return movieDao.save(movie);
+		return movieDao.insert(movie);
+	}
+
+	public boolean delete(int movieId) {
+		return movieDao.delete(movieId);
 	}
 
 	public boolean update(Movie movie) {
 		return movieDao.update(movie);
 	}
-	
 
-	public boolean delete(int movieId) {
-		return movieDao.delete(movieId);
+	public List<Movie> findPage(PageBean pageBean, Movie s_movie) {
+		return movieDao.findPage(pageBean, s_movie);
 	}
 	
 	public List<Movie> findAll(){
@@ -43,9 +46,5 @@ public class MovieService {
 	
 	public Movie findByMovieId(int movieId){
 		return movieDao.findByMovieId(movieId);
-	}
-
-	public List<Movie> findPage(PageBean pageBean, Movie s_movie) {
-		return movieDao.findPage(pageBean, s_movie);
 	}
 }

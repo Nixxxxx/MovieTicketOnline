@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -38,19 +39,10 @@ public class OrderDao {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public boolean save(Order order){
+	public boolean insert(Order order){
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
 		Transaction tx=session.beginTransaction();
 		session.save(order);
-		tx.commit();
-		session.close();
-		return true;
-	}
-	
-	public boolean update(Order order){
-		Session session=getHibernateTemplate().getSessionFactory().openSession();
-		Transaction tx=session.beginTransaction();
-		session.merge(order);
 		tx.commit();
 		session.close();
 		return true;
@@ -66,6 +58,34 @@ public class OrderDao {
 		return true;
 	}
 	
+	public boolean update(Order order){
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tx=session.beginTransaction();
+		session.merge(order);
+		tx.commit();
+		session.close();
+		return true;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Order> findPage(PageBean pageBean, Order s_order){
+		StringBuffer sb=new StringBuffer("from Order");
+//		if(s_admin!=null){
+//			if(StringUtil.isNotEmpty(s_admin.getNumber())){
+//				sb.append(" and deptName like '%"+s_admin.getName()+"%'");
+//			}
+//		}
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tx=session.beginTransaction();
+		Query q = session.createQuery(sb.toString());
+		q.setFirstResult(pageBean.getStart());
+        q.setMaxResults(pageBean.getPageSize());
+        List<Order> orderList=q.list();
+        tx.commit();
+        session.close();
+		return orderList;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Order> findAll(){
 		String queryString="from Order";
@@ -76,10 +96,5 @@ public class OrderDao {
 		return (Order) this.hibernateTemplate.get(Order.class, orderId);
 	}
 
-	public List<Order> findPage(PageBean pageBean, Order s_admin) {
-		String queryString = "";
-		
-		return null;
-	}
 
 }

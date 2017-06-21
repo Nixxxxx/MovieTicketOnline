@@ -47,11 +47,22 @@ public class AdminDao {
 		query.setParameter("password", password);
 		@SuppressWarnings("unchecked")
 		List<Admin> lists=query.list();
-		if(lists!=null&&lists.size()>0){
+		if(lists != null&&lists.size()>0){
 			user=lists.get(0);
 		}
 		session.close();
 		return user;
+	}
+
+	public boolean changePassword(int adminId,String password){
+		Admin admin=this.findByAdminId(adminId);
+		admin.setPassword(password);
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tx=session.beginTransaction();
+		session.merge(admin);
+		tx.commit();
+		session.close();
+		return true;
 	}
 	
 	public boolean insert(Admin admin){
@@ -63,32 +74,21 @@ public class AdminDao {
 		return true;
 	}
 	
+	public boolean delete(int adminId){
+		Admin admin=this.findByAdminId(adminId);
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tr=session.beginTransaction();
+		session.delete(admin); 
+		tr.commit();
+		session.close();
+		return true;
+	}
+	
 	public boolean update(Admin admin){
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
 		Transaction tx=session.beginTransaction();
 		session.merge(admin);
 		tx.commit();
-		session.close();
-		return true;
-	}
-	
-	public boolean changePassword(int id,String password){
-		Admin admin=this.findByAdminId(id);
-		admin.setPassword(password);
-		Session session=getHibernateTemplate().getSessionFactory().openSession();
-		Transaction tx=session.beginTransaction();
-		session.merge(admin);
-		tx.commit();
-		session.close();
-		return true;
-	}
-	
-	public boolean delete(int id){
-		Admin admin=this.findByAdminId(id);
-		Session session=getHibernateTemplate().getSessionFactory().openSession();
-		Transaction tr=session.beginTransaction();
-		session.delete(admin); 
-		tr.commit();
 		session.close();
 		return true;
 	}

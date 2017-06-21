@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -38,19 +39,10 @@ public class CinemaDao {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public boolean save(Cinema cinema){
+	public boolean insert(Cinema cinema){
 		Session session=getHibernateTemplate().getSessionFactory().openSession();
 		Transaction tx=session.beginTransaction();
 		session.save(cinema);
-		tx.commit();
-		session.close();
-		return true;
-	}
-	
-	public boolean update(Cinema cinema){
-		Session session=getHibernateTemplate().getSessionFactory().openSession();
-		Transaction tx=session.beginTransaction();
-		session.merge(cinema);
 		tx.commit();
 		session.close();
 		return true;
@@ -66,6 +58,34 @@ public class CinemaDao {
 		return true;
 	}
 	
+	public boolean update(Cinema cinema){
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tx=session.beginTransaction();
+		session.merge(cinema);
+		tx.commit();
+		session.close();
+		return true;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Cinema> findPage(PageBean pageBean, Cinema s_cinema){
+		StringBuffer sb=new StringBuffer("from Cinema");
+//		if(s_admin!=null){
+//			if(StringUtil.isNotEmpty(s_admin.getNumber())){
+//				sb.append(" and deptName like '%"+s_admin.getName()+"%'");
+//			}
+//		}
+		Session session=getHibernateTemplate().getSessionFactory().openSession();
+		Transaction tx=session.beginTransaction();
+		Query q = session.createQuery(sb.toString());
+		q.setFirstResult(pageBean.getStart());
+        q.setMaxResults(pageBean.getPageSize());
+        List<Cinema> cinemaList=q.list();
+        tx.commit();
+        session.close();
+		return cinemaList;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Cinema> findAll(){
 		String queryString="from Cinema";
@@ -76,9 +96,4 @@ public class CinemaDao {
 		return (Cinema) this.hibernateTemplate.get(Cinema.class, cinemaId);
 	}
 
-	public List<Cinema> findPage(PageBean pageBean, Cinema s_admin) {
-		String queryString = "";
-		
-		return null;
-	}
 }

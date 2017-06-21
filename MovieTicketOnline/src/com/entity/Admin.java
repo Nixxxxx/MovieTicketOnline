@@ -12,11 +12,11 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="admin")
 public class Admin {
 
-	int adminId;
-	String adminName;
-	String password;
-	String email;
-	String mobile;
+	private int adminId;
+	private String adminName;
+	private String password;
+	private String email;
+	private String mobile;
 	
 	public Admin(String adminName, String password, String email, String mobile) {
 		this.adminName = adminName;
@@ -44,7 +44,7 @@ public class Admin {
 		this.adminName = adminName;
 	}
 	
-	@Column(name="password",nullable=false,length=64)
+	@Column(name="password",nullable=false,length=40)
 	public String getPassword() {
 		return password;
 	}
