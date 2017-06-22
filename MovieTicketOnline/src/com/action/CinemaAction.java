@@ -45,7 +45,7 @@ public class CinemaAction {
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showList(Cinema s_cinema,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/cinema/manage");
+		ModelAndView mav=new ModelAndView("/cinema/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
@@ -55,9 +55,11 @@ public class CinemaAction {
 		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
 		List<Cinema> cinemaList=cinemaService.findPage(pageBean, s_cinema);
 		int total=cinemaService.findAll().size();
-		String pageCode=PageUtil.rootPageTion("cinema/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
-		mav.addObject("pageCode", pageCode);
-		mav.addObject("cinemaList", cinemaList);
+		if(total>0){
+			String pageCode=PageUtil.rootPageTion("cinema/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			mav.addObject("pageCode", pageCode);
+			mav.addObject("cinemaList", cinemaList);
+		}
 		return mav;
 	}
 	
@@ -74,9 +76,9 @@ public class CinemaAction {
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String number = request.getParameter("number");
 		if(checkNumber(number)){
-			String cinemaName = request.getParameter("cinemaName");
+			String name = request.getParameter("name");
 			String address = request.getParameter("address");
-			Cinema cinema = new Cinema(number, cinemaName, address);
+			Cinema cinema = new Cinema(number, name, address);
 			success = cinemaService.insert(cinema);
 			if(success)
 				msg = "更新成功";
@@ -109,6 +111,7 @@ public class CinemaAction {
 		if(checkNumber(number)){
 			Cinema cinema = cinemaService.findByCinemaId(cinemaId);
 			cinema.setNumber(number);
+			cinema.setName(request.getParameter("name"));
 			cinema.setAddress(request.getParameter("address"));
 			success = cinemaService.update(cinema);
 			if(success)

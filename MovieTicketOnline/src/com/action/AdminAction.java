@@ -114,7 +114,7 @@ public class AdminAction {
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showList(Admin s_admin,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/admin/manage");
+		ModelAndView mav=new ModelAndView("/admin/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
@@ -124,9 +124,11 @@ public class AdminAction {
 		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
 		List<Admin> adminList=adminService.findPage(pageBean, s_admin);
 		int total=adminService.findAll().size();
-		String pageCode=PageUtil.rootPageTion("admin/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
-		mav.addObject("pageCode", pageCode);
-		mav.addObject("adminList", adminList);
+		if(total>0){
+			String pageCode=PageUtil.rootPageTion("admin/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			mav.addObject("pageCode", pageCode);
+			mav.addObject("adminList", adminList);
+		}
 		return mav;
 	}
 	

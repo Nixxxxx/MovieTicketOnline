@@ -10,31 +10,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>无线巡更管理中心</title>
+  <title>电票贩</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
   
-  <!-- jQuery 3.1.1 -->
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css">
-  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-  <!-- Slimscroll -->
-  <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
-  <!-- Theme style -->
-  <link rel="stylesheet" href="static/dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="static/dist/css/skins/_all-skins.min.css">
+  <!--  jQuery 3.1.1 -->
+  <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
+  <!--  Bootstrap 3.3.6  -->
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <script src="/MovieTicketOnline/static/bootstrap/js/bootstrap.min.js"></script>
+  <!--  Font Awesome  -->
+  <link rel="stylesheet" href="static/plugins/font-awesome/css/font-awesome.min.css">
+  <!--  Select2  -->
+  <link rel="stylesheet" href="static/plugins/select2/select2.min.css">
+  <script src="/MovieTicketOnline/static/plugins/select2/select2.full.min.js"></script>
+  <!--  bootstrap datepicker  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+  <!--  Slimscroll  -->
+  <script src="/MovieTicketOnline/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!--  Theme style  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/AdminLTE.css">
+
+
   
   <style>
     body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
@@ -59,9 +59,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <ol class="breadcrumb">
-    <li><a href="/Xungeng/main/showInfo"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li>地点管理</li>
-    <li class="active">地点列表</li>
+    <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li>影院管理</li>
+    <li class="active">影院列表</li>
   </ol>
 </section>
 
@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">地点列表</h3>
+          <h3 class="box-title">影院列表</h3>
 
           <div class="box-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
@@ -89,31 +89,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>地点编号</th>
-              <th>地点名</th>
-              <th>备注</th>
-              <th>更新时间</th>
+              <th>影院编号</th>
+              <th>影院名</th>
+              <th>地址</th>
               <th>操作</th>
             </tr>
             </thead>
-            <c:if test="${locationList!=null }" >
-            <c:forEach var="location" items="${locationList }" varStatus="status">
+            <c:if test="${cinemaList != null }" >
+            <c:forEach var="cinema" items="${cinemaList }" varStatus="status">
             <tr>
               <td>${status.index+1 }</td>
-              <td class="location_number">${location.number }</td>
-              <td class="location_name">${location.name }</td>
-              <td class="location_extra">${location.extra }</td>
-              <td>${location.addTime }</td>
+              <td class="cinema_number">${cinema.number }</td>
+              <td class="cinema_name">${cinema.name }</td>
+              <td class="cinema_address">${cinema.address }</td>
               <td>
-                <a data-id="${location.id }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#location_update_modal" data-backdrop="static">
+                <a data-id="${cinema.cinemaId }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#cinema_update_modal" data-backdrop="static">
                   <i class="fa fa-edit"></i>编辑</a> |
-                <a data-id="${location.id }" class="del" href="javascript:void(0)">
+                <a data-id="${cinema.cinemaId }" class="del" href="javascript:void(0)">
                   <i class="fa fa-trash"></i> 删除</a>
               </td>
             </tr>
             </c:forEach>
             </c:if>
-            <c:if test="${locationList==null }" >
+            <c:if test="${cinemaList == null }" >
             	<tr><td colspan="6">无记录！</td></tr>
             </c:if>
           </table>
@@ -136,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 
 <!-- Modal -->
-<div class="modal fade" id="location_update_modal" tabindex="-1" role="dialog" aria-labelledby="location_update_label">
+<div class="modal fade" id="cinema_update_modal" tabindex="-1" role="dialog" aria-labelledby="cinema_update_label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <!-- Horizontal Form -->
@@ -144,36 +142,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="box-header with-border">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h3 class="box-title" id="location_update_label">编辑地点</h3>
+          <h3 class="box-title" id="cinema_update_label">编辑地点</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="location_update_form">
+        <form class="form-horizontal" method="post" id="cinema_update_form">
           <div class="box-body">
-            <input type="hidden" id="location_id" name="id">
+            <input type="hidden" id="cinema_id" name="cinemaId">
             <div class="form-group">
-              <label for="location_number" class="col-sm-2 control-label">编号</label>
+              <label for="cinema_number" class="col-sm-2 control-label">影院编号</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="location_number" name="number" placeholder="请输入地点编号" required>
+                <input type="text" class="form-control" id="cinema_number" name="number" placeholder="请输入影院编号" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="location_name" class="col-sm-2 control-label">地点名</label>
+              <label for="cinema_name" class="col-sm-2 control-label">影院名</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="location_name" name="name" maxlength="10" placeholder="请输入地点名" required>
+                <input type="text" class="form-control" id="cinema_name" name="name" maxlength="20" placeholder="请输入影院名" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="location_extra" class="col-sm-2 control-label">备注</label>
+              <label for="cinema_address" class="col-sm-2 control-label">地址</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="location_extra" name="extra" placeholder="请输入备注，100字以内，选填"></textarea>
+                <textarea class="form-control" rows="3" id="cinema_address" name="address" maxlength="100" placeholder="请输入地址，100字以内" required></textarea>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="submit" class="btn btn-info pull-right" id="location_update_button" data-loading-text="更新中...">更新</button>
+            <button type="submit" class="btn btn-info pull-right" id="cinema_update_button" data-loading-text="更新中...">更新</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -190,17 +188,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(".del").click(function () {
 
             if (confirm("确认要删除吗？")) {
-                var id = $(this).data("id");
+                var cinemaId = $(this).data("id");
                 $.ajax({
-                    url: "/Xungeng/location/del",
+                    url: "cinema/del",
                     type: "POST",
-                    data: {id: id},
+                    data: {cinemaId: cinemaId},
                     dataType: "json",
                     success: function (data) {
                         alert(data.msg);
                         if (data.success) {
                             //菜单栏当前选中
-                            window.location.href="/Xungeng/location/showList";
+                            window.location.href="cinema/list";
                             $now_selected = $("ul.treeview-menu>li.active>a");
                             $now_selected.trigger("click");
                         }
@@ -218,23 +216,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //更新modal
         $(".update").click(function () {
-            $("#location_id").val($(this).data("id"));
-            $("#location_number").val($(this).parent().prevAll(".location_number").text());
-            $("#location_name").val($(this).parent().prevAll(".location_name").text());
-            $("#location_extra").val($(this).parent().prevAll(".location_extra").text());
+            $("#cinema_id").val($(this).data("id"));
+            $("#cinema_number").val($(this).parent().prevAll(".cinema_number").text());
+            $("#cinema_name").val($(this).parent().prevAll(".cinema_name").text());
+            $("#cinema_address").val($(this).parent().prevAll(".cinema_address").text());
         });
 
         //更新
-        var $location_update_form = $("#location_update_form");
-        $location_update_form.submit(function () {
+        var $cinema_update_form = $("#cinema_update_form");
+        $cinema_update_form.submit(function () {
 
-            var $update_btn = $("#location_update_button");
+            var $update_btn = $("#cinema_update_button");
 
             $.ajax({
-                url: "/Xungeng/location/update",
+                url: "cinema/update",
                 type: "POST",
                 dataType: "json",
-                data: $location_update_form.serialize(),
+                data: $cinema_update_form.serialize(),
                 beforeSend: function () {
                     $update_btn.button("loading");
                 },
@@ -245,10 +243,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     alert(data.msg);
                     if (data.success) {
                         //菜单栏当前选中
-                        window.location.href="/Xungeng/location/showList";
+                        window.location.href="cinema/list";
                         $now_selected = $("ul.treeview-menu>li.active>a");
                         $now_selected.trigger("click");
-                        $("#location_update_modal").modal("hide");
+                        $("#cinema_update_modal").modal("hide");
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

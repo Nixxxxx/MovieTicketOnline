@@ -15,26 +15,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
   
-  <!-- jQuery 3.1.1 -->
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css">
-  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-  <!-- Slimscroll -->
-  <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
-  <!-- Theme style -->
-  <link rel="stylesheet" href="static/dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="static/dist/css/skins/_all-skins.min.css">
+  <!--  jQuery 3.1.1 -->
+  <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
+  <!--  Bootstrap 3.3.6  -->
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <script src="/MovieTicketOnline/static/bootstrap/js/bootstrap.min.js"></script>
+  <!--  Font Awesome  -->
+  <link rel="stylesheet" href="static/plugins/font-awesome/css/font-awesome.min.css">
+  <!--  Select2  -->
+  <link rel="stylesheet" href="static/plugins/select2/select2.min.css">
+  <script src="/MovieTicketOnline/static/plugins/select2/select2.full.min.js"></script>
+  <!--  bootstrap datepicker  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+  <!--  Slimscroll  -->
+  <script src="/MovieTicketOnline/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!--  Theme style  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/AdminLTE.css">
   
   <style>
     body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
@@ -82,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>用户名</th>
+              <th>管理员名</th>
               <th>邮箱</th>
               <th>手机</th>
               <th>备注</th>
@@ -149,25 +147,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="admin_name" class="col-sm-2 control-label">用户名</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="admin_name" name="adminName" maxlength="10" placeholder="请输入用户名" required>
+                <input type="text" class="form-control" id="admin_name" name="adminName" maxlength="20" placeholder="请输入用户名" required>
               </div>
             </div>
             <div class="form-group">
               <label for="admin_mobile" class="col-sm-2 control-label">手机</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="admin_mobile" name="mobile" maxlength="11" placeholder="请输入手机" required>
+                <input type="text" class="form-control" id="admin_mobile" name="mobile" maxlength="20" placeholder="请输入手机" required>
               </div>
             </div>
             <div class="form-group">
               <label for="admin_email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="admin_email" name="email" placeholder="请输入Email，选填">
+                <input type="text" class="form-control" id="admin_email" name="email" maxlength="20" placeholder="请输入Email" required>
               </div>
             </div>
             <div class="form-group">
               <label for="admin_extra" class="col-sm-2 control-label">备注</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="admin_extra" name="extra" placeholder="请输入备注，100字以内，选填"></textarea>
+                <textarea class="form-control" rows="3" id="admin_extra" name="extra" maxlength="100" placeholder="请输入备注，100字以内" required></textarea>
               </div>
             </div>
           </div>
@@ -205,37 +203,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="add_admin_name" class="col-sm-2 control-label">用户名</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add_admin_name" name="userName" maxlength="10" placeholder="请输入用户名" required>
+                <input type="text" class="form-control" id="add_admin_name" name="adminName" maxlength="20" placeholder="请输入用户名" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_admin_password" class="col-sm-2 control-label">密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="add_admin_password" name="password" placeholder="请输入密码" required>
+                <input type="password" class="form-control" id="add_admin_password" name="password" maxlength="20" placeholder="请输入密码" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_confirm_password" class="col-sm-2 control-label">确认密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="add_confirm_password" name="confirmPassword" placeholder="请再次输入密码" required>
+                <input type="password" class="form-control" id="add_confirm_password" name="confirm_password" maxlength="20" placeholder="请再次输入密码" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_admin_mobile" class="col-sm-2 control-label">手机</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add_admin_mobile" name="mobile" maxlength="11" placeholder="请输入手机" required>
+                <input type="text" class="form-control" id="add_admin_mobile" name="mobile" maxlength="20" placeholder="请输入手机" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_admin_email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add_admin_email" name="email" placeholder="请输入Email，选填">
+                <input type="text" class="form-control" id="add_admin_email" name="email" maxlength="20" placeholder="请输入Email" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_admin_extra" class="col-sm-2 control-label">备注</label>
               <div class="col-sm-10">
-                <textarea class="form-control" id="add_admin_extra" rows="3" name="extra" placeholder="请输入备注，100字以内，选填"></textarea>
+                <textarea class="form-control" id="add_admin_extra" rows="3" name="extra" maxlength="100" placeholder="请输入备注，100字以内，选填"></textarea>
               </div>
             </div>
           </div>
@@ -280,19 +278,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="add_admin_password" class="col-sm-2 control-label">原密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="oldPassword" placeholder="请输入原密码" required>
+                <input type="password" class="form-control" name="old_password" placeholder="请输入原密码" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_admin_password" class="col-sm-2 control-label">新密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="newPassword" placeholder="请输入新密码" required>
+                <input type="password" class="form-control" name="new_password" placeholder="请输入新密码" required>
               </div>
             </div>
             <div class="form-group">
               <label for="add_confirm_password" class="col-sm-2 control-label">确认密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入新密码" required>
+                <input type="password" class="form-control" name="confirm_password" placeholder="请再次输入新密码" required>
               </div>
             </div>
           </div>
@@ -316,17 +314,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(".del").click(function () {
 
             if (confirm("确认要删除吗？")) {
-                var id = $(this).data("id");
+                var adminId = $(this).data("id");
                 $.ajax({
-                    url: "/Xungeng/admin/del",
+                    url: "admin/del",
                     type: "POST",
-                    data: {id: id},
+                    data: {adminId: adminId},
                     dataType: "json",
                     success: function (data) {
                         alert(data.msg);
                         if (data.success) {
                             //菜单栏当前选中
-                        	window.location.href="/Xungeng/admin/showSetting";
+                        	window.location.href="admin/list";
                             $now_selected = $("ul.treeview-menu>li.active>a");
                             $now_selected.trigger("click");
                         }
@@ -358,7 +356,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             var $update_btn = $("#admin_update_button");
 
             $.ajax({
-                url: "/Xungeng/admin/update",
+                url: "admin/update",
                 type: "POST",
                 dataType: "json",
                 data: $admin_update_form.serialize(),
@@ -372,7 +370,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     alert(data.msg);
                     if (data.success) {
                         //菜单栏当前选中
-                        window.location.href="/Xungeng/admin/showSetting";
+                        window.location.href="admin/list";
                         $now_selected = $("ul.treeview-menu>li.active>a");
                         $now_selected.trigger("click");
                         $("#admin_update_modal").modal("hide");
@@ -398,15 +396,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $error_msg.text(error_msg).removeClass("invisible");
             };
         	$error_msg.addClass("invisible");
-            var userName = $.trim($("#admin_add_form input[name=userName]").val());
+            var userName = $.trim($("#admin_add_form input[name=adminName]").val());
             var password = $.trim($("#admin_add_form input[name=password]").val());
-            var confirmPassword = $.trim($("#admin_add_form input[name=confirmPassword]").val());
+            var confirm_password = $.trim($("#admin_add_form input[name=confirm_password]").val());
             var u_pattern = /^[a-zA-Z0-9_@]{4,20}$/;
             if (!u_pattern.test(userName)) {
                 show_error("请输入正确格式的用户名");
                 return false;
             }
-            if(password.localeCompare(confirmPassword)!=0){
+            if(password.localeCompare(confirm_password)!=0){
             	show_error("密码不一致");
             	return false;
             }
@@ -466,23 +464,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $error_msg.text(error_msg).removeClass("invisible");
             };
         	$error_msg.addClass("invisible");
-            var oldPassword = $.trim($("#admin_change_password_form input[name=oldPassword]").val());
-            var newPassword = $.trim($("#admin_change_password_form input[name=newPassword]").val());
-            var confirmPassword = $.trim($("#admin_change_password_form input[name=confirmPassword]").val());
+            var old_password = $.trim($("#admin_change_password_form input[name=old_password]").val());
+            var new_password = $.trim($("#admin_change_password_form input[name=new_password]").val());
+            var confirm_password = $.trim($("#admin_change_password_form input[name=confirm_password]").val());
             var u_pattern = /^[a-zA-Z0-9_@]{4,20}$/;
-            if (oldPassword==""||newPassword == ""||confirmPassword=="") {
+            if (old_password==""||new_password == ""||confirm_password=="") {
                 show_error("请填写完整");	
                 return false;
             }
-            if (!u_pattern.test(oldPassword)) {
+            if (!u_pattern.test(old_password)) {
                 show_error("请输入正确格式的原密码");
                 return false;
             }
-            if(newPassword.localeCompare(confirmPassword)!=0){
+            if(new_password.localeCompare(confirm_password)!=0){
             	show_error("密码不一致");
             	return false;
             }
-            if (!u_pattern.test(newPassword)) {
+            if (!u_pattern.test(new_password)) {
                 show_error("请输入正确格式的新密码");
                 return false;
             }

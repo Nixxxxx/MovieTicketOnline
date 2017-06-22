@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="cinema_insert_form">
+        <form class="form-horizontal" method="post" id="cinema_add_form">
           <div class="box-body">
             <div class="form-group">
               <label for="location_number" class="col-sm-2 control-label">编号</label>
@@ -88,9 +88,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
             <div class="form-group">
-              <label for="cinemaName" class="col-sm-2 control-label">影院名称</label>
+              <label for="name" class="col-sm-2 control-label">影院名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinema_name" name="cinemaName" maxlength="20" placeholder="请输入影院名" required>
+                <input type="text" class="form-control" id="cinema_name" name="name" maxlength="20" placeholder="请输入影院名" required>
               </div>
             </div>
             <div class="form-group">
@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="cinema_insert_button" data-loading-text="添加中...">添加</button>
+            <button type="submit" class="btn btn-info pull-right" id="cinema_add_button" data-loading-text="添加中...">添加</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -115,26 +115,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        var $cinema_insert_form = $("#cinema_insert_form");
-        $cinema_insert_form.submit(function () {
+        var $cinema_add_form = $("#cinema_add_form");
+        $cinema_add_form.submit(function () {
 
-            var $insert_btn = $("#cinema_insert_button");
+            var $add_btn = $("#cinema_add_button");
 
             $.ajax({
                 url: "cinema/insert",
                 type: "POST",
                 dataType: "json",
-                data: $cinema_insert_form.serialize(),
+                data: $cinema_add_form.serialize(),
                 beforeSend: function () {
-                    $insert_btn.button("loading");
+                    $add_btn.button("loading");
                 },
                 complete: function () {
-                    $insert_btn.button("reset");
+                    $add_btn.button("reset");
                 },
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        $cinema_insert_form[0].reset();
+                        $cinema_add_form[0].reset();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

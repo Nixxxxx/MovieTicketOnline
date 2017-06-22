@@ -121,7 +121,7 @@ public class UserAction {
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showList(User s_user,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/user/manage");
+		ModelAndView mav=new ModelAndView("/user/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
@@ -131,9 +131,11 @@ public class UserAction {
 		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
 		List<User> userList=userService.findPage(pageBean, s_user);
 		int total=userService.findAll().size();
-		String pageCode=PageUtil.rootPageTion("user/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
-		mav.addObject("pageCode", pageCode);
-		mav.addObject("userList", userList);
+		if(total>0){
+			String pageCode=PageUtil.rootPageTion("user/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			mav.addObject("pageCode", pageCode);
+			mav.addObject("userList", userList);
+		}
 		return mav;
 	}
 	

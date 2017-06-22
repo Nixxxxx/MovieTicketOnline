@@ -138,7 +138,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <i class="fa fa-angle-left pull-right"></i>
           </span> </a>
           <ul class="treeview-menu">
-            <li><a href="main/showInfo" target="container"><i class="fa fa-circle-o"></i> 系统总览 </a></li>
+            <li><a href="order/info" target="container"><i class="fa fa-circle-o"></i> 系统总览 </a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -154,7 +154,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
 	        <ul class="treeview-menu">
-	          <li><a href="user/add" target="container"><i class="fa fa-circle-o"></i> 用户管理</a></li>
 	          <li><a href="user/list" target="container"><i class="fa fa-circle-o"></i> 用户列表 </a></li>
 	        </ul>
         </li>

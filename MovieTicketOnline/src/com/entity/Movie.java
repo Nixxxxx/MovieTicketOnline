@@ -14,18 +14,18 @@ public class Movie {
 
 	private int movieId;
 	private String number;
-	private String movieName;
+	private String name;
 	private String time;
-	private String status;
+	private String status = "0";
 	private String introduce;
 	
 	public Movie() {
 		super();
 	}
 
-	public Movie(String number, String movieName, String time, String introduce) {
+	public Movie(String number, String name, String time, String introduce) {
 		this.number = number;
-		this.movieName = movieName;
+		this.name = name;
 		this.time = time;
 		this.introduce = introduce;
 	}
@@ -49,12 +49,12 @@ public class Movie {
 		this.number = number;
 	}
 	
-	@Column(name="movieName",nullable=false,length=40)
-	public String getMovieName() {
-		return movieName;
+	@Column(name="name",nullable=false,length=40)
+	public String getName() {
+		return name;
 	}
-	public void setMovieName(String movieName) {
-		this.movieName = movieName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Column(name="time",nullable=false,length=4)

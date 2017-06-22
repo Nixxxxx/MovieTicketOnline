@@ -14,16 +14,16 @@ public class Cinema {
 
 	private int cinemaId;
 	private String number;
-	private String cinemaName;
+	private String name;
 	private String address;
 	
 	public Cinema() {
 		super();
 	}
 
-	public Cinema(String number, String cinemaName, String address) {
+	public Cinema(String number, String name, String address) {
 		this.number = number;
-		this.cinemaName = cinemaName;
+		this.name = name;
 		this.address = address;
 	}
 	
@@ -47,12 +47,12 @@ public class Cinema {
 		this.number = number;
 	}
 
-	@Column(name="cinemaName",nullable=false,length=40)
-	public String getCinemaName() {
-		return cinemaName;
+	@Column(name="name",nullable=false,length=40)
+	public String getName() {
+		return name;
 	}
-	public void setCinemaName(String cinemaName) {
-		this.cinemaName = cinemaName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Column(name="address",nullable=false,length=100)

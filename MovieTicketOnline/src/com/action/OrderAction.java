@@ -47,7 +47,7 @@ public class OrderAction {
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showList(Order s_order,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/order/manage");
+		ModelAndView mav=new ModelAndView("/order/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
@@ -57,9 +57,11 @@ public class OrderAction {
 		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
 		List<Order> orderList=orderService.findPage(pageBean, s_order);
 		int total=orderService.findAll().size();
-		String pageCode=PageUtil.rootPageTion("order/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
-		mav.addObject("pageCode", pageCode);
-		mav.addObject("orderList", orderList);
+		if(total>0){
+			String pageCode=PageUtil.rootPageTion("order/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			mav.addObject("pageCode", pageCode);
+			mav.addObject("orderList", orderList);
+		}
 		return mav;
 	}
 	

@@ -20,7 +20,7 @@ import com.util.StringUtil;
 import net.sf.json.JSONObject;
 
 @Controller
-@RequestMapping(value="/movie")
+@RequestMapping(value = "/movie")
 public class MovieAction {
 
 	@Autowired
@@ -45,7 +45,7 @@ public class MovieAction {
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showList(Movie s_movie,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/movie/manage");
+		ModelAndView mav=new ModelAndView("/movie/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
@@ -55,9 +55,11 @@ public class MovieAction {
 		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
 		List<Movie> movieList=movieService.findPage(pageBean, s_movie);
 		int total=movieService.findAll().size();
-		String pageCode=PageUtil.rootPageTion("movie/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
-		mav.addObject("pageCode", pageCode);
-		mav.addObject("movieList", movieList);
+		if(total>0){
+			String pageCode=PageUtil.rootPageTion("movie/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			mav.addObject("pageCode", pageCode);
+			mav.addObject("movieList", movieList);
+		}
 		return mav;
 	}
 	
@@ -70,22 +72,30 @@ public class MovieAction {
 		return true;
 	}
 	
-	@RequestMapping(value="/insert")
+	@RequestMapping(value = "/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String number = request.getParameter("number");
-		String movieName = request.getParameter("movieName");
-		String time = request.getParameter("time");
-		String introduce = request.getParameter("introduce");
-		Movie movie = new Movie(number, movieName, time, introduce);
-		movieService.insert(movie);
+		if(checkNumber(number)){
+			String name = request.getParameter("name");
+			String time = request.getParameter("time");
+			String introduce = request.getParameter("introduce");
+			Movie movie = new Movie(number, name, time, introduce);
+			success = movieService.insert(movie);
+			if(success)
+				msg = "更新成功";
+			else msg = "更新失败";
+		}else{
+			msg = "编号已存在";
+			success = false;
+		}
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
 	}
 	
-	@RequestMapping(value="/del")
+	@RequestMapping(value = "/del")
 	public void delete(HttpServletRequest request,HttpServletResponse response){
-		int movieId=Integer.parseInt(request.getParameter("movieId"));
+		int movieId = Integer.parseInt(request.getParameter("movieId"));
 		success = movieService.delete(movieId);
 		if(success)
 			msg = "删除成功";
@@ -95,15 +105,16 @@ public class MovieAction {
 		ResponseUtil.writeJson(response,resultJson);
 	}
 	
-	@RequestMapping(value="/update")
+	@RequestMapping(value = "/update")
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int movieId = Integer.parseInt(request.getParameter("movieId"));
 		String number = request.getParameter("number");
 		if(checkNumber(number)){
 			Movie movie = movieService.findByMovieId(movieId);
 			movie.setNumber(number);
-			movie.setMovieName(request.getParameter("movieName"));
+			movie.setName(request.getParameter("name"));
 			movie.setTime(request.getParameter("time"));
+			movie.setStatus(request.getParameter("status"));
 			movie.setIntroduce(request.getParameter("introduce"));
 			success = movieService.update(movie);
 			if(success)
@@ -111,7 +122,7 @@ public class MovieAction {
 			else msg = "更新失败";
 		}else{
 			success = false;
-			msg="编号已存在";
+			msg = "编号已存在";
 		}
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);

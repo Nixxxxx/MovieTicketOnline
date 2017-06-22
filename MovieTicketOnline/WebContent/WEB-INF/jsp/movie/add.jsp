@@ -15,26 +15,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
   
-  <!-- jQuery 3.1.1 -->
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css">
-  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-  <!-- Slimscroll -->
-  <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
-  <!-- Theme style -->
-  <link rel="stylesheet" href="static/dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="static/dist/css/skins/_all-skins.min.css">
+  <!--  jQuery 3.1.1 -->
+  <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
+  <!--  Bootstrap 3.3.6  -->
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <script src="/MovieTicketOnline/static/bootstrap/js/bootstrap.min.js"></script>
+  <!--  Font Awesome  -->
+  <link rel="stylesheet" href="static/plugins/font-awesome/css/font-awesome.min.css">
+  <!--  Select2  -->
+  <link rel="stylesheet" href="static/plugins/select2/select2.min.css">
+  <script src="/MovieTicketOnline/static/plugins/select2/select2.full.min.js"></script>
+  <!--  bootstrap datepicker  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+  <!--  Slimscroll  -->
+  <script src="/MovieTicketOnline/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!--  Theme style  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/AdminLTE.css">
   
   <style>
     body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
@@ -77,18 +75,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="movie_insert_form">
+        <form class="form-horizontal" method="post" id="movie_add_form">
+         <div class="text-danger wrapper-xs text-center invisible" id="error_msg">
+                	错误信息
+          </div>
           <div class="box-body">
             <div class="form-group">
-              <label for="location_number" class="col-sm-2 control-label">编号</label>
+              <label for="movie_number" class="col-sm-2 control-label">编号</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinema_number" name="number" placeholder="请输入电影编号" required>
+                <input type="text" class="form-control" id="movie_number" name="number" placeholder="请输入电影编号" required>
               </div>
             </div>
             <div class="form-group">
               <label for="movie_name" class="col-sm-2 control-label">电影名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="movie_name" name="cinemaName" maxlength="40" placeholder="请输入电影名" required>
+                <input type="text" class="form-control" id="movie_name" name="name" maxlength="40" placeholder="请输入电影名" required>
               </div>
             </div>
             <div class="form-group">
@@ -107,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="movie_insert_button" data-loading-text="添加中...">添加</button>
+            <button type="submit" class="btn btn-info pull-right" id="movie_add_button" data-loading-text="添加中...">添加</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -119,26 +120,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        var $movie_insert_form = $("#movie_insert_form");
-        $movie_insert_form.submit(function () {
+        var $movie_add_form = $("#movie_add_form");
+        $movie_add_form.submit(function () {
 
-            var $insert_btn = $("#movie_insert_button");
+        	var $error_msg = $("#error_msg");
+
+        	var show_error = function (error_msg) {
+                $error_msg.text(error_msg).removeClass("invisible");
+            };
+            
+            var time = $.trim($("#movie_time").val());
+            var t_pattern = /^[0-9]{1,4}$/;
+            if(!t_pattern.test(time)){
+                show_error("请输入正确的时长");
+                return false;
+            }
+
+            var $add_btn = $("#movie_add_button");
 
             $.ajax({
                 url: "movie/insert",
                 type: "POST",
                 dataType: "json",
-                data: $movie_insert_form.serialize(),
+                data: $movie_add_form.serialize(),
                 beforeSend: function () {
-                    $insert_btn.button("loading");
+                    $add_btn.button("loading");
                 },
                 complete: function () {
-                    $insert_btn.button("reset");
+                    $add_btn.button("reset");
                 },
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        $movie_insert_form[0].reset();
+                        $movie_add_form[0].reset();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
