@@ -19,11 +19,14 @@ public class Movie {
 	private String status;
 	private String introduce;
 	
-	public Movie(String number, String movieName, String time, String status, String introduce) {
+	public Movie() {
+		super();
+	}
+
+	public Movie(String number, String movieName, String time, String introduce) {
 		this.number = number;
 		this.movieName = movieName;
 		this.time = time;
-		this.status = status;
 		this.introduce = introduce;
 	}
 	

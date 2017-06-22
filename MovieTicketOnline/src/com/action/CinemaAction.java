@@ -73,10 +73,18 @@ public class CinemaAction {
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String number = request.getParameter("number");
-		String cinemaName = request.getParameter("cinemaName");
-		String address = request.getParameter("address");
-		Cinema cinema = new Cinema(number, cinemaName, address);
-		cinemaService.insert(cinema);
+		if(checkNumber(number)){
+			String cinemaName = request.getParameter("cinemaName");
+			String address = request.getParameter("address");
+			Cinema cinema = new Cinema(number, cinemaName, address);
+			success = cinemaService.insert(cinema);
+			if(success)
+				msg = "更新成功";
+			else msg = "更新失败";
+		}else{
+			msg = "编号已存在";
+			success = false;
+		}
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
@@ -101,6 +109,7 @@ public class CinemaAction {
 		if(checkNumber(number)){
 			Cinema cinema = cinemaService.findByCinemaId(cinemaId);
 			cinema.setNumber(number);
+			cinema.setAddress(request.getParameter("address"));
 			success = cinemaService.update(cinema);
 			if(success)
 				msg = "更新成功";

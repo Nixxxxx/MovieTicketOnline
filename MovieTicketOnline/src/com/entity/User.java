@@ -18,6 +18,10 @@ public class User {
 	private String email;
 	private String mobile;
 	
+	public User() {
+		super();
+	}
+
 	public User(String userName, String password, String email, String mobile) {
 		this.userName = userName;
 		this.password = password;

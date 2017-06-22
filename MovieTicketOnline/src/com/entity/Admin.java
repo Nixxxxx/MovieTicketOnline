@@ -17,12 +17,18 @@ public class Admin {
 	private String password;
 	private String email;
 	private String mobile;
+	private String extra;
 	
-	public Admin(String adminName, String password, String email, String mobile) {
+	public Admin() {
+		super();
+	}
+
+	public Admin(String adminName, String password, String email, String mobile, String extra) {
 		this.adminName = adminName;
 		this.password = password;
 		this.email = email;
 		this.mobile = mobile;
+		this.extra = extra;
 	}
 	
 	@Id
@@ -52,7 +58,7 @@ public class Admin {
 		this.password = password;
 	}
 
-	@Column(name="email",nullable=false,length=10)
+	@Column(name="email",nullable=false,length=20)
 	public String getEmail() {
 		return email;
 	}
@@ -61,13 +67,22 @@ public class Admin {
 		this.email = email;
 	}
 
-	@Column(name="mobile",nullable=false,length=10)
+	@Column(name="mobile",nullable=false,length=20)
 	public String getMobile() {
 		return mobile;
 	}
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	
+	@Column(name="extra",nullable=false,length=100)
+	public String getExtra() {
+		return extra;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = extra;
 	}
 	
 	

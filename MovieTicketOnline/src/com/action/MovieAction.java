@@ -75,9 +75,8 @@ public class MovieAction {
 		String number = request.getParameter("number");
 		String movieName = request.getParameter("movieName");
 		String time = request.getParameter("time");
-		String status = request.getParameter("status");
 		String introduce = request.getParameter("introduce");
-		Movie movie = new Movie(number, movieName, time, status, introduce);
+		Movie movie = new Movie(number, movieName, time, introduce);
 		movieService.insert(movie);
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
@@ -105,7 +104,6 @@ public class MovieAction {
 			movie.setNumber(number);
 			movie.setMovieName(request.getParameter("movieName"));
 			movie.setTime(request.getParameter("time"));
-			movie.setStatus(request.getParameter("status"));
 			movie.setIntroduce(request.getParameter("introduce"));
 			success = movieService.update(movie);
 			if(success)

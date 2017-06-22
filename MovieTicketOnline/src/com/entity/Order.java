@@ -21,8 +21,12 @@ public class Order {
 	private int amount;
 	private String address;
 	private String mobile;
+	private String status;
 	
-	
+	public Order() {
+		super();
+	}
+
 	public Order(Date startTime, int amount, String adress, String mobile) {
 		this.startTime = startTime;
 		this.amount = amount;
@@ -65,7 +69,7 @@ public class Order {
 		this.startTime = startTime;
 	}
 	
-	@Column(name="amount",nullable=false,length=2)
+	@Column(name="amount",nullable=false,length=3)
 	public int getAmount() {
 		return amount;
 	}
@@ -81,12 +85,21 @@ public class Order {
 		this.address = address;
 	}
 	
-	@Column(name="mobile",nullable=false,length=40)
+	@Column(name="mobile",nullable=false,length=20)
 	public String getMobile() {
 		return mobile;
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	
+	@Column(name="status",nullable=false,length=1)
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

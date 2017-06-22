@@ -15,26 +15,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
   
-  <!-- jQuery 3.1.1 -->
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css">
-  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.min.js"></script>
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-  <script src="//cdn.bootcss.com/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-  <!-- Slimscroll -->
-  <script src="//cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
-  <!-- Theme style -->
-  <link rel="stylesheet" href="static/dist/css/AdminLTE.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="static/dist/css/skins/_all-skins.min.css">
+<!-- logo -->
+  <link rel="shortcut icon" href="/MovieTicketOnline/static/dist/img/favicon.png">
+  <!--  jQuery 3.1.1 -->
+  <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
+  <!--  Bootstrap 3.3.6  -->
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <script src="/MovieTicketOnline/static/bootstrap/js/bootstrap.min.js"></script>
+  <!--  Font Awesome  -->
+  <link rel="stylesheet" href="static/plugins/font-awesome/css/font-awesome.min.css">
+  <!--  Select2  -->
+  <link rel="stylesheet" href="static/plugins/select2/select2.min.css">
+  <script src="/MovieTicketOnline/static/plugins/select2/select2.full.min.js"></script>
+  <!--  bootstrap datepicker  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+  <!--  Slimscroll  -->
+  <script src="/MovieTicketOnline/static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!--  Theme style  -->
+  <link rel="stylesheet" href="/MovieTicketOnline/static/dist/css/AdminLTE.css">
+  <!--  AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+
   
   <style>
     body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
@@ -77,31 +79,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="cinemaInsertForm">
+        <form class="form-horizontal" method="post" id="cinema_insert_form">
           <div class="box-body">
             <div class="form-group">
               <label for="location_number" class="col-sm-2 control-label">编号</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinemaId" name="number" placeholder="请输入地点编号" required>
+                <input type="text" class="form-control" id="cinema_id" name="number" placeholder="请输入地点编号" required>
               </div>
             </div>
             <div class="form-group">
               <label for="cinemaName" class="col-sm-2 control-label">影院名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinemaName" name="cinemaName" maxlength="10" placeholder="请输入地点名" required>
+                <input type="text" class="form-control" id="cinema_name" name="cinemaName" maxlength="20" placeholder="请输入影院名" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="cinemaAddress" class="col-sm-2 control-label">地址</label>
+              <label for="cinema_address" class="col-sm-2 control-label">地址</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="cinemaAddress" name="address" placeholder="请输入备注，100字以内，选填"></textarea>
+                <textarea class="form-control" rows="3" id="cinema_address" name="address" maxlength="100" placeholder="请输入地址，100字以内，必填" required></textarea>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="cinemaInsertButton" data-loading-text="添加中...">添加</button>
+            <button type="submit" class="btn btn-info pull-right" id="cinema_insert_button" data-loading-text="添加中...">添加</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -113,26 +115,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        var $cinemaInsertForm = $("#cinemaInsertForm");
-        $cinemaInsertForm.submit(function () {
+        var $cinema_insert_form = $("#cinema_insert_form");
+        $cinema_insert_form.submit(function () {
 
-            var $insertBtn = $("#cinemaInsertButton");
+            var $insert_btn = $("#cinema_insert_button");
 
             $.ajax({
                 url: "cinema/insert",
                 type: "POST",
                 dataType: "json",
-                data: $cinemaInsertForm.serialize(),
+                data: $cinema_insert_form.serialize(),
                 beforeSend: function () {
-                    $insertBtn.button("loading");
+                    $insert_btn.button("loading");
                 },
                 complete: function () {
-                    $insertBtn.button("reset");
+                    $insert_btn.button("reset");
                 },
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        $cinemaInsertForm[0].reset();
+                        $cinema_insert_form[0].reset();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

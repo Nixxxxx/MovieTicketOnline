@@ -40,11 +40,6 @@ public class AdminAction {
 		this.adminService = adminService;
 	}
 	
-	@RequestMapping(value="/add")
-	public ModelAndView add(){
-		return new ModelAndView("/admin/add");
-	}
-	
 	@RequestMapping(value="/signIn")
 	public void login(String userName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
 		List<Admin> admins=adminService.findAll();
@@ -88,7 +83,7 @@ public class AdminAction {
 		return new ModelAndView("../../signIn");
 	}
 	
-	public boolean checkUserName(String userName){
+	public boolean checkAdminName(String userName){
 		List<Admin> admins=adminService.findAll();
 		for(Admin admin:admins){
 			if(userName.equals(admin.getAdminName()))
@@ -139,11 +134,12 @@ public class AdminAction {
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String adminName=request.getParameter("adminName");
-		if(checkUserName(adminName)){
-			String password=request.getParameter("password");
-			String email=request.getParameter("email");
-			String mobile=request.getParameter("mobile");
-			Admin admin=new Admin(adminName,MD5Util.getMD5Code(password),email,mobile);
+		if(checkAdminName(adminName)){
+			String password = request.getParameter("password");
+			String email = request.getParameter("email");
+			String mobile = request.getParameter("mobile");
+			String extra = request.getParameter("extra");
+			Admin admin=new Admin(adminName,MD5Util.getMD5Code(password),email,mobile,extra);
 			success=adminService.insert(admin);
 			if(success)
 				msg="添加成功";
@@ -173,10 +169,11 @@ public class AdminAction {
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int adminId=Integer.parseInt(request.getParameter("adminId"));
 		Admin admin=adminService.findByAdminId(adminId);
-		if(checkUserName(request.getParameter("adminName"))){
+		if(checkAdminName(request.getParameter("adminName"))){
 			admin.setAdminName(request.getParameter("adminName"));
 			admin.setEmail(request.getParameter("email"));
 			admin.setMobile(request.getParameter("mobile"));
+			admin.setExtra(request.getParameter("extra"));
 			success=adminService.update(admin);
 			if(success)
 				msg="修改成功";

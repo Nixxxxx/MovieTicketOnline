@@ -77,31 +77,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="movieAddForm">
+        <form class="form-horizontal" method="post" id="movie_insert_form">
           <div class="box-body">
             <div class="form-group">
               <label for="location_number" class="col-sm-2 control-label">编号</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="cinemaId" name="number" placeholder="请输入地点编号" required>
+                <input type="text" class="form-control" id="cinema_number" name="number" placeholder="请输入电影编号" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="cinemaName" class="col-sm-2 control-label">电影名称</label>
+              <label for="movie_name" class="col-sm-2 control-label">电影名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="movieName" name="cinemaName" maxlength="10" placeholder="请输入地点名" required>
+                <input type="text" class="form-control" id="movie_name" name="cinemaName" maxlength="40" placeholder="请输入电影名" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="cinemaAddress" class="col-sm-2 control-label">简介</label>
+              <label for="movie_time" class="col-sm-2 control-label">电影时长</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="cinemaAddress" name="address" placeholder="请输入备注，100字以内，选填"></textarea>
+                <input type="text" class="form-control" id="movie_time" name="time" maxlength="4" placeholder="请输入电影时长/min" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="movie_introduce" class="col-sm-2 control-label">简介</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3" id="movie_introduce" name="introduce" maxlength="100" placeholder="请输入简介，100字以内" required></textarea>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
-            <button type="submit" class="btn btn-info pull-right" id="movieInsertButton" data-loading-text="添加中...">添加</button>
+            <button type="submit" class="btn btn-info pull-right" id="movie_insert_button" data-loading-text="添加中...">添加</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -113,26 +119,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 <script type="text/javascript">
     $(function () {
-        var $movieAddForm = $("#movieAddForm");
-        $movieAddForm.submit(function () {
+        var $movie_insert_form = $("#movie_insert_form");
+        $movie_insert_form.submit(function () {
 
-            var $insertBtn = $("#movieInsertButton");
+            var $insert_btn = $("#movie_insert_button");
 
             $.ajax({
                 url: "movie/insert",
                 type: "POST",
                 dataType: "json",
-                data: $movieAddForm.serialize(),
+                data: $movie_insert_form.serialize(),
                 beforeSend: function () {
-                    $insertBtn.button("loading");
+                    $insert_btn.button("loading");
                 },
                 complete: function () {
-                    $insertBtn.button("reset");
+                    $insert_btn.button("reset");
                 },
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        $movieAddForm[0].reset();
+                        $movie_insert_form[0].reset();
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

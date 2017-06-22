@@ -17,6 +17,10 @@ public class Cinema {
 	private String cinemaName;
 	private String address;
 	
+	public Cinema() {
+		super();
+	}
+
 	public Cinema(String number, String cinemaName, String address) {
 		this.number = number;
 		this.cinemaName = cinemaName;
@@ -58,6 +62,5 @@ public class Cinema {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 	
 }

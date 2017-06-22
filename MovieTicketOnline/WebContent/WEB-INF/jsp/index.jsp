@@ -146,7 +146,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <i class="fa fa-angle-left pull-right"></i>
           </span> </a>
           <ul class="treeview-menu">
-            <li><a href="" target="container"><i class="fa fa-circle-o"></i> 订单处理 </a></li>
+            <li><a href="order/list" target="container"><i class="fa fa-circle-o"></i> 订单处理 </a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -154,8 +154,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
 	        <ul class="treeview-menu">
-	          <li><a href="" target="container"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-	          <li><a href="" target="container"><i class="fa fa-circle-o"></i> 用户列表 </a></li>
+	          <li><a href="user/add" target="container"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+	          <li><a href="user/list" target="container"><i class="fa fa-circle-o"></i> 用户列表 </a></li>
 	        </ul>
         </li>
         <li class="treeview">
@@ -163,8 +163,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 添加电影 </a></li>
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 电影列表 </a></li>
+              <li><a href="movie/add" target="container"><i class="fa fa-circle-o"></i> 添加电影 </a></li>
+              <li><a href="movie/list" target="container"><i class="fa fa-circle-o"></i> 电影列表 </a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -172,8 +172,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 添加影院 </a></li>
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 影院列表 </a></li>
+              <li><a href="cinema/add" target="container"><i class="fa fa-circle-o"></i> 添加影院 </a></li>
+              <li><a href="cinema/list" target="container"><i class="fa fa-circle-o"></i> 影院列表 </a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -190,7 +190,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 管理员设置 </a></li>
+              <li><a href="admin/list" target="container"><i class="fa fa-circle-o"></i> 管理员设置 </a></li>
             </ul>
         </li>
         <li class="header">THEMES</li>
@@ -205,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <iframe name="container" style="zoom: 1;" height="650px;" src="" frameBorder="0" width="100%"></iframe>
+    <iframe name="container" style="zoom: 1;" height="650px;" src="order/info" frameBorder="0" width="100%"></iframe>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer text-center">
