@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>无线巡更管理中心</title>
+  <title>电票贩</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
@@ -58,8 +58,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li>地点管理</li>
-    <li class="active">地点列表</li>
+    <li>用户管理</li>
+    <li class="active">用户列表</li>
   </ol>
 </section>
 
@@ -69,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">地点列表</h3>
+          <h3 class="box-title">用户列表</h3>
 
           <div class="box-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
@@ -87,31 +87,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>地点编号</th>
-              <th>地点名</th>
-              <th>备注</th>
-              <th>更新时间</th>
+              <th>用户名</th>
+              <th>邮箱</th>
+              <th>手机</th>
               <th>操作</th>
             </tr>
             </thead>
-            <c:if test="${locationList!=null }" >
-            <c:forEach var="location" items="${locationList }" varStatus="status">
+            <c:if test="${userList!=null }" >
+            <c:forEach var="user" items="${userList }" varStatus="status">
             <tr>
               <td>${status.index+1 }</td>
-              <td class="location_number">${location.number }</td>
-              <td class="location_name">${location.name }</td>
-              <td class="location_extra">${location.extra }</td>
-              <td>${location.addTime }</td>
+              <td class="user_userName">${user.userName }</td>
+              <td class="user_email">${user.email }</td>
+              <td class="user_mobile">${user.mobile }</td>
               <td>
-                <a data-id="${location.id }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#location_update_modal" data-backdrop="static">
+                <a data-id="${user.userId }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#user_update_modal" data-backdrop="static">
                   <i class="fa fa-edit"></i>编辑</a> |
-                <a data-id="${location.id }" class="del" href="javascript:void(0)">
+                <a data-id="${user.userId }" class="del" href="javascript:void(0)">
                   <i class="fa fa-trash"></i> 删除</a>
               </td>
             </tr>
             </c:forEach>
             </c:if>
-            <c:if test="${locationList==null }" >
+            <c:if test="${userList==null }" >
             	<tr><td colspan="6">无记录！</td></tr>
             </c:if>
           </table>
@@ -134,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 
 <!-- Modal -->
-<div class="modal fade" id="location_update_modal" tabindex="-1" role="dialog" aria-labelledby="location_update_label">
+<div class="modal fade" id="user_update_modal" tabindex="-1" role="dialog" aria-labelledby="user_update_label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <!-- Horizontal Form -->
@@ -142,36 +140,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="box-header with-border">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h3 class="box-title" id="location_update_label">编辑地点</h3>
+          <h3 class="box-title" id="user_update_label">用户列表</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="location_update_form">
+        <form class="form-horizontal" method="post" id="user_update_form">
           <div class="box-body">
-            <input type="hidden" id="location_id" name="id">
+            <input type="hidden" id="user_id" name="userId">
             <div class="form-group">
-              <label for="location_number" class="col-sm-2 control-label">编号</label>
+              <label for="user_userName" class="col-sm-2 control-label">用户名</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="location_number" name="number" placeholder="请输入地点编号" required>
+                <input type="text" class="form-control" id="user_userName" name="userName" maxlength="20" placeholder="请输入用户名" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="location_name" class="col-sm-2 control-label">地点名</label>
+              <label for="user_email" class="col-sm-2 control-label">邮箱</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="location_name" name="name" maxlength="10" placeholder="请输入地点名" required>
+                <input type="text" class="form-control" id="user_email" name="email" placeholder="请输入邮箱" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="location_extra" class="col-sm-2 control-label">备注</label>
+              <label for="user_mobile" class="col-sm-2 control-label">手机</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="location_extra" name="extra" placeholder="请输入备注，100字以内，选填"></textarea>
+                <input type="text" class="form-control" id="user_mobile" name="mobile" placeholder="请输入手机" required>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="submit" class="btn btn-info pull-right" id="location_update_button" data-loading-text="更新中...">更新</button>
+            <button type="submit" class="btn btn-info pull-right" id="user_update_button" data-loading-text="更新中...">更新</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -188,19 +186,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(".del").click(function () {
 
             if (confirm("确认要删除吗？")) {
-                var id = $(this).data("id");
+                var userId = $(this).data("id");
                 $.ajax({
-                    url: "/Xungeng/location/del",
+                    url: "user/del",
                     type: "POST",
-                    data: {id: id},
+                    data: {userId: userId},
                     dataType: "json",
                     success: function (data) {
                         alert(data.msg);
                         if (data.success) {
                             //菜单栏当前选中
-                            window.location.href="/Xungeng/location/showList";
-                            $now_selected = $("ul.treeview-menu>li.active>a");
-                            $now_selected.trigger("click");
+                            window.location.href="user/list";
                         }
                     },
                     error: function (XMLHttpRequest, textStatus) {
@@ -216,23 +212,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //更新modal
         $(".update").click(function () {
-            $("#location_id").val($(this).data("id"));
-            $("#location_number").val($(this).parent().prevAll(".location_number").text());
-            $("#location_name").val($(this).parent().prevAll(".location_name").text());
-            $("#location_extra").val($(this).parent().prevAll(".location_extra").text());
+            $("#user_id").val($(this).data("id"));
+            $("#user_userName").val($(this).parent().prevAll(".user_userName").text());
+            $("#user_email").val($(this).parent().prevAll(".user_email").text());
+            $("#user_mobile").val($(this).parent().prevAll(".user_mobile").text());
         });
 
         //更新
-        var $location_update_form = $("#location_update_form");
-        $location_update_form.submit(function () {
+        var $user_update_form = $("#user_update_form");
+        $user_update_form.submit(function () {
 
-            var $update_btn = $("#location_update_button");
+            var $update_btn = $("#user_update_button");
 
             $.ajax({
-                url: "/Xungeng/location/update",
+                url: "user/update",
                 type: "POST",
                 dataType: "json",
-                data: $location_update_form.serialize(),
+                data: $user_update_form.serialize(),
                 beforeSend: function () {
                     $update_btn.button("loading");
                 },
@@ -243,10 +239,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     alert(data.msg);
                     if (data.success) {
                         //菜单栏当前选中
-                        window.location.href="/Xungeng/location/showList";
-                        $now_selected = $("ul.treeview-menu>li.active>a");
-                        $now_selected.trigger("click");
-                        $("#location_update_modal").modal("hide");
+                        window.location.href="user/list";
+                        $("#user_update_modal").modal("hide");
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
