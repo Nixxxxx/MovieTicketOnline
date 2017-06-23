@@ -41,7 +41,7 @@ public class AdminAction {
 	}
 	
 	@RequestMapping(value="/signIn")
-	public void login(String userName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
+	public void login(String adminName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
 		List<Admin> admins=adminService.findAll();
 		String sRand=(String)request.getSession().getAttribute("sRand");
 		int flag=0;
@@ -50,8 +50,8 @@ public class AdminAction {
 		if(captcha.equalsIgnoreCase(sRand)){
 			flag=1;
 			for(Admin admin:admins){
-				if(admin.getAdminName().equals(userName)&&MD5Util.getMD5Code(password).equals(admin.getPassword())){
-					admin=adminService.findByAdminId(admin.getAdminId());
+				if(admin.getAdminName().equals(adminName)&&MD5Util.getMD5Code(password).equals(admin.getPassword())){
+					admin = adminService.findByAdminId(admin.getAdminId());
 					request.getSession().setAttribute("admin", admin);
 					if("true".equals(checkbox)){
 						Cookie cookie=new Cookie(admin.getAdminName(),admin.getPassword());
@@ -61,10 +61,10 @@ public class AdminAction {
 				}
 			}
 		}
-		if(flag==1) 
+		if(flag == 1) 
 			result="用户名或密码错误";
-		if(flag==0)
-			result="验证码错误";
+		if(flag == 0)
+			result = "验证码错误";
 		resultJson.put("result",result);
 		ResponseUtil.writeJson(response,resultJson);
 	}
@@ -83,10 +83,10 @@ public class AdminAction {
 		return new ModelAndView("../../signIn");
 	}
 	
-	public boolean checkAdminName(String userName){
+	public boolean checkAdminName(String adminName,int adminId){
 		List<Admin> admins=adminService.findAll();
 		for(Admin admin:admins){
-			if(userName.equals(admin.getAdminName()))
+			if(adminName.equals(admin.getAdminName()) && adminId != admin.getAdminId())
 				return false;
 		}
 		return true;
@@ -136,7 +136,7 @@ public class AdminAction {
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String adminName=request.getParameter("adminName");
-		if(checkAdminName(adminName)){
+		if(checkAdminName(adminName,0)){
 			String password = request.getParameter("password");
 			String email = request.getParameter("email");
 			String mobile = request.getParameter("mobile");
@@ -171,7 +171,7 @@ public class AdminAction {
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int adminId=Integer.parseInt(request.getParameter("adminId"));
 		Admin admin=adminService.findByAdminId(adminId);
-		if(checkAdminName(request.getParameter("adminName"))){
+		if(checkAdminName(request.getParameter("adminName"), adminId)){
 			admin.setAdminName(request.getParameter("adminName"));
 			admin.setEmail(request.getParameter("email"));
 			admin.setMobile(request.getParameter("mobile"));

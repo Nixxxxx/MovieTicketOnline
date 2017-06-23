@@ -180,8 +180,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 添加时段 </a></li>
-              <li><a href="" target="container"><i class="fa fa-circle-o"></i> 时段列表 </a></li>
+              <li><a href="schedule/add" target="container"><i class="fa fa-circle-o"></i> 添加时段 </a></li>
+              <li><a href="schedule/list" target="container"><i class="fa fa-circle-o"></i> 时段列表 </a></li>
             </ul>
         </li>
         <li class="treeview">

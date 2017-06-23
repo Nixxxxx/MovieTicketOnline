@@ -165,7 +165,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="admin_extra" class="col-sm-2 control-label">备注</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="admin_extra" name="extra" maxlength="100" placeholder="请输入备注，100字以内" required></textarea>
+                <textarea class="form-control" rows="3" id="admin_extra" name="extra" maxlength="100" placeholder="请输入备注，100字以内"></textarea>
               </div>
             </div>
           </div>
@@ -219,15 +219,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
             <div class="form-group">
-              <label for="add_admin_mobile" class="col-sm-2 control-label">手机</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="add_admin_mobile" name="mobile" maxlength="20" placeholder="请输入手机" required>
-              </div>
-            </div>
-            <div class="form-group">
               <label for="add_admin_email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="add_admin_email" name="email" maxlength="20" placeholder="请输入Email" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="add_admin_mobile" class="col-sm-2 control-label">手机</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="add_admin_mobile" name="mobile" maxlength="20" placeholder="请输入手机" required>
               </div>
             </div>
             <div class="form-group">
@@ -276,21 +276,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
             <div class="form-group">
-              <label for="add_admin_password" class="col-sm-2 control-label">原密码</label>
+              <label for="change_admin_password" class="col-sm-2 control-label">原密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="old_password" placeholder="请输入原密码" required>
+                <input type="password" class="form-control" name="oldPassword" placeholder="请输入原密码" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="add_admin_password" class="col-sm-2 control-label">新密码</label>
+              <label for="change_admin_password" class="col-sm-2 control-label">新密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="new_password" placeholder="请输入新密码" required>
+                <input type="password" class="form-control" name="newPassword" placeholder="请输入新密码" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="add_confirm_password" class="col-sm-2 control-label">确认密码</label>
+              <label for="change_confirm_password" class="col-sm-2 control-label">确认密码</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="confirm_password" placeholder="请再次输入新密码" required>
+                <input type="password" class="form-control" name="confirmPassword" placeholder="请再次输入新密码" required>
               </div>
             </div>
           </div>
@@ -344,8 +344,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(".update").click(function () {
             $("#admin_id").val($(this).data("id"));
             $("#admin_name").val($(this).parent().prevAll(".admin_name").text());
-            $("#admin_mobile").val($(this).parent().prevAll(".admin_mobile").text());
             $("#admin_email").val($(this).parent().prevAll(".admin_email").text());
+            $("#admin_mobile").val($(this).parent().prevAll(".admin_mobile").text());
             $("#admin_extra").val($(this).parent().prevAll(".admin_extra").text());
         });
 
@@ -464,11 +464,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $error_msg.text(error_msg).removeClass("invisible");
             };
         	$error_msg.addClass("invisible");
-            var old_password = $.trim($("#admin_change_password_form input[name=old_password]").val());
-            var new_password = $.trim($("#admin_change_password_form input[name=new_password]").val());
-            var confirm_password = $.trim($("#admin_change_password_form input[name=confirm_password]").val());
+            var old_password = $.trim($("#admin_change_password_form input[name=oldPassword]").val());
+            var new_password = $.trim($("#admin_change_password_form input[name=newPassword]").val());
+            var confirm_password = $.trim($("#admin_change_password_form input[name=confirmPassword]").val());
             var u_pattern = /^[a-zA-Z0-9_@]{4,20}$/;
-            if (old_password==""||new_password == ""||confirm_password=="") {
+            if (old_password=="" ||new_password == ""||confirm_password == "") {
                 show_error("请填写完整");	
                 return false;
             }

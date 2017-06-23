@@ -63,10 +63,10 @@ public class MovieAction {
 		return mav;
 	}
 	
-	public boolean checkNumber(String number){
+	public boolean checkNumber(String number, int movieId){
 		List<Movie> movies = movieService.findAll();
 		for(Movie movie:movies){
-			if(number.equals(movie.getNumber()))
+			if(number.equals(movie.getNumber()) || movie.getMovieId() != movieId)
 				return false;
 		}
 		return true;
@@ -75,7 +75,7 @@ public class MovieAction {
 	@RequestMapping(value = "/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String number = request.getParameter("number");
-		if(checkNumber(number)){
+		if(checkNumber(number, 0)){
 			String name = request.getParameter("name");
 			String time = request.getParameter("time");
 			String introduce = request.getParameter("introduce");
@@ -109,7 +109,7 @@ public class MovieAction {
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int movieId = Integer.parseInt(request.getParameter("movieId"));
 		String number = request.getParameter("number");
-		if(checkNumber(number)){
+		if(checkNumber(number, movieId)){
 			Movie movie = movieService.findByMovieId(movieId);
 			movie.setNumber(number);
 			movie.setName(request.getParameter("name"));

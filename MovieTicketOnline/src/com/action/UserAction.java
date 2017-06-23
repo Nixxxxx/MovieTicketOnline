@@ -90,10 +90,10 @@ public class UserAction {
 		return new ModelAndView("../../signIn");
 	}
 	
-	public boolean checkUserName(String userName){
+	public boolean checkUserName(String userName, int userId){
 		List<User> users=userService.findAll();
 		for(User user:users){
-			if(userName.equals(user.getUserName()))
+			if(userName.equals(user.getUserName()) || userId != user.getUserId())
 				return false;
 		}
 		return true;
@@ -142,7 +142,7 @@ public class UserAction {
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String userName=request.getParameter("userName");
-		if(checkUserName(userName)){
+		if(checkUserName(userName, 0)){
 			String password=request.getParameter("password");
 			String email=request.getParameter("email");
 			String mobile=request.getParameter("mobile");
@@ -176,7 +176,7 @@ public class UserAction {
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int userId=Integer.parseInt(request.getParameter("userId"));
 		User user=userService.findByUserId(userId);
-		if(checkUserName(request.getParameter("userName"))){
+		if(checkUserName(request.getParameter("userName"), userId)){
 			user.setUserName(request.getParameter("userName"));
 			user.setEmail(request.getParameter("email"));
 			user.setMobile(request.getParameter("mobile"));

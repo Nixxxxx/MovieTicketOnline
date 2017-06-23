@@ -1,7 +1,5 @@
 package com.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,24 +14,28 @@ public class Order {
 
 	private int orderId;
 	private int userId;
-	private int movieId;
-	private Date startTime;
+	private int scheduleId;
 	private int amount;
 	private String address;
 	private String mobile;
 	private String status;
+	private String extra;
 	
 	public Order() {
 		super();
 	}
 
-	public Order(Date startTime, int amount, String adress, String mobile) {
-		this.startTime = startTime;
+	public Order(int userId, int scheduleId, int amount, String address, String mobile, String status) {
+		super();
+		this.userId = userId;
+		this.scheduleId = scheduleId;
 		this.amount = amount;
-		this.address = adress;
+		this.address = address;
 		this.mobile = mobile;
+		this.status = status;
 	}
-	
+
+
 	@Id
 	@Column(name="orderId",nullable=false,unique=true)
 	@GenericGenerator(name="generator",strategy="native")
@@ -53,22 +55,15 @@ public class Order {
 		this.userId = userId;
 	}
 	
-	@Column(name="movieId",nullable=false,length=10)
-	public int getMovieId() {
-		return movieId;
+	@Column(name="scheduleId",nullable=false,length=10)
+	public int getScheduleId() {
+		return scheduleId;
 	}
-	public void setMovieId(int movieId) {
-		this.movieId = movieId;
+
+	public void setScheduleId(int scheduleId) {
+		this.scheduleId = scheduleId;
 	}
-	
-	@Column(name="startTime",nullable=false)
-	public Date getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	
+
 	@Column(name="amount",nullable=false,length=3)
 	public int getAmount() {
 		return amount;
@@ -101,6 +96,14 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	@Column(name="extra",nullable=false,length=100)
+	public String getExtra() {
+		return extra;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = extra;
+	}
 	
 }

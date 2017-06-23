@@ -94,7 +94,6 @@ public class OrderAction {
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		Order order = orderService.findByOrderId(orderId);
-		order.setStartTime(Time.valueOf(request.getParameter("startTime")+":00"));
 		order.setAmount(Integer.parseInt(request.getParameter("amount")));
 		order.setAddress(request.getParameter("address"));
 		order.setMobile(request.getParameter("mobile"));

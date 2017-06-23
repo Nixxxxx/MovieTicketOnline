@@ -63,10 +63,10 @@ public class CinemaAction {
 		return mav;
 	}
 	
-	public boolean checkNumber(String number){
+	public boolean checkNumber(String number, int cinemaId){
 		List<Cinema> cinemas = cinemaService.findAll();
 		for(Cinema cinema:cinemas){
-			if(number.equals(cinema.getNumber()))
+			if(number.equals(cinema.getNumber()) || cinemaId != cinema.getCinemaId())
 				return false;
 		}
 		return true;
@@ -75,7 +75,7 @@ public class CinemaAction {
 	@RequestMapping(value="/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
 		String number = request.getParameter("number");
-		if(checkNumber(number)){
+		if(checkNumber(number, 0)){
 			String name = request.getParameter("name");
 			String address = request.getParameter("address");
 			Cinema cinema = new Cinema(number, name, address);
@@ -108,7 +108,7 @@ public class CinemaAction {
 	public void update(HttpServletRequest request,HttpServletResponse response){
 		int cinemaId = Integer.parseInt(request.getParameter("cinemaId"));
 		String number = request.getParameter("number");
-		if(checkNumber(number)){
+		if(checkNumber(number, cinemaId)){
 			Cinema cinema = cinemaService.findByCinemaId(cinemaId);
 			cinema.setNumber(number);
 			cinema.setName(request.getParameter("name"));

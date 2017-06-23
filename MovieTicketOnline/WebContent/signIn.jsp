@@ -30,12 +30,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <strong>Sign in</strong>
         </div>
         <form id="signInForm">
-            <div class="text-danger wrapper-xs text-center invisible" id="errorMsg">
+            <div class="text-danger wrapper-xs text-center invisible" id="error_msg">
                 	错误信息
             </div>
             <div class="list-group list-group-sm">
                 <div class="list-group-item">
-                    <input type="text" name="userName" id="userName" placeholder="Username" class="form-control no-border">
+                    <input type="text" name="adminName" id="admin_name" placeholder="Username" class="form-control no-border">
                 </div>
                 <div class="list-group-item">
                     <input type="password" name="password" id="password" placeholder="Password" class="form-control no-border">
@@ -75,33 +75,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
 <script>
 $(function () {
-    var $errorMsg = $("#errorMsg");
+    var $error_msg = $("#error_msg");
 
-    var showError = function (errorMsg) {
-        $errorMsg.text(errorMsg).removeClass("invisible");
+    var show_error = function (error_msg) {
+        $error_msg.text(error_msg).removeClass("invisible");
     };
 
     $("#signInForm").submit(function () {
-        $errorMsg.addClass("invisible")
-        var userName = $.trim($("#userName").val());
+        $error_msg.addClass("invisible")
+        var adminName = $.trim($("#admin_name").val());
         var password = $.trim($("#password").val());
         var captcha = $.trim($("#captcha").val());
         var u_pattern = /^[a-zA-Z0-9_@]{4,20}$/;
         var c_pattern = /^[a-zA-Z0-9]{4}$/;
-        if (!u_pattern.test(userName)) {
-            showError("请输入正确格式的用户名");
+        if (!u_pattern.test(adminName)) {
+            show_error("请输入正确格式的用户名");
             return false;
         }
         if (password == "") {
-            showError("请输入密码");
+            show_error("请输入密码");
             return false;
         }
         if (!u_pattern.test(password)) {
-            showError("请输入正确格式的密码");
+            show_error("请输入正确格式的密码");
             return false;
         }
         if (!c_pattern.test(captcha)) {
-            showError("请输入正确格式的验证码");
+            show_error("请输入正确格式的验证码");
             return false;
         }
         var $signInBtn = $("#signInBtn");
@@ -109,7 +109,7 @@ $(function () {
             url: "admin/signIn",
             type: "POST",
             data: {
-                userName: userName,
+            	adminName: adminName,
                 password: password,
                 captcha: captcha,
                 checkbox: $("#checkbox").prop("checked")
@@ -128,14 +128,14 @@ $(function () {
             	if(data.result == ""){
             		window.location.href ="admin/index";
             	}else{
-                    showError(data.result);
+                    show_error(data.result);
             	}
             },
             error: function (XMLHttpRequest, textStatus) {
                 if (textStatus == "timeout") {
-                    showError("登录超时");
+                    show_error("登录超时");
                 } else {
-                    showError("登录失败");
+                    show_error("登录失败");
                 }
             }
         });
