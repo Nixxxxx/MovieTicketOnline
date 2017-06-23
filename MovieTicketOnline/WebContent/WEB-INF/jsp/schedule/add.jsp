@@ -115,22 +115,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <div class="form-group">
               <label for="schedule_date" class="col-sm-2 control-label">日期</label>
-              <div class="col-sm-10">
+              <div class="col-sm-3">
                 <input type="text" class="form-control pull-right" name="date" id="schedule_date">
               </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">开始时间</label>
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <select class="form-control hour" id="start_hour" title="时"></select>
-                  </div>
-                  <div class="col-sm-6">
-                    <select class="form-control minute" id="start_minute" title="分"></select>
-                  </div>
-                </div>
+              <label class="col-sm-2 control-label">开始时间</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="schedule_hour" name="hour" maxlength="2" required>
               </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="schedule_minute" name="minute" maxlength="2" required>
+              </div>
+              <label class="col-sm-1 control-label">h/m</label>
             </div>
           </div>
           <!-- /.box-body -->
@@ -166,39 +161,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             autoclose: true
         }).datepicker("setDate", today);
 
-        //添加时间与地点
-        $("#schedule_location_time_form").submit(function () {
-            var data = $(this).serializeArray();
-            //如果时间或者地点未选择
-            if (!data || !data[0] || !data[1]) {
-                return false;
-            }
-
-            var str = "<div class=\"col-sm-12\"><p class=\"form-control-static\">";
-            var $loc_time = $("#location_time");
-            //构造如如下数据（第一个为地点ID） 104|03:00:00-04:00:00|04:00:00-06:20:00|,103|03:00:00-04:00:00|,
-            $.each(data, function (index, obj) {
-                var value_arr = obj.value.split("|");
-                str += value_arr[1] + " ";
-                //拼接单个地点时段
-                $loc_time.val($loc_time.val() + value_arr[0] + "|");
-            });
-            str += "</p></div>";
-            //拼接多个地点时段
-            $loc_time.val($loc_time.val() + ",");
-
-            $("#location_time_content").append(str);
-            //关闭模态框
-            $("#schedule_location_time_modal").modal("hide");
-
-            this.reset();
-
-            return false;
-        });
-
 
         var $schedule_add_form = $("#schedule_add_form");
         $schedule_add_form.submit(function () {
+            var start_time = $("#start_hour").val() + ":" + $("#start_minute").val();
 
             var $add_btn = $("#schedule_add_button");
 
