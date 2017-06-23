@@ -59,8 +59,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
-    <li>巡更管理</li>
-    <li class="active">指派任务</li>
+    <li>场次管理</li>
+    <li class="active">添加场次</li>
   </ol>
 </section>
 
@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- Horizontal Form -->
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">指派任务</h3>
+          <h3 class="box-title">添加场次</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -82,13 +82,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <label for="schedule_cinema" class="col-sm-2 control-label">影院</label>
               <div class="col-sm-10">
                 <select class="form-control select2" name="cinema" id="schedule_cinema" style="width: 100%">
-                  <c:if test="${cinemas != null }"></c:if>
+                  <c:if test="${cinemas != null }">
                     <option value="">请选择影院</option>
                     <c:forEach var="cinema" items="${cinemas }">
                     <option value="${cinema.cinemaId }">
                     	${cinema.number }-${cinema.name }
                     </option>
 					</c:forEach>
+				  </c:if>
                   <c:if test="${cinemas == null }">
                     <option>请添加影院</option>
                   </c:if>
@@ -116,18 +117,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="schedule_date" class="col-sm-2 control-label">日期</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control pull-right" name="date" id="schedule_date">
+                <input type="text" class="form-control pull-right" id="schedule_date" name="date">
               </div>
               <label class="col-sm-2 control-label">开始时间</label>
-              <div class="col-sm-2">
-                <input type="text" class="form-control" id="schedule_hour" name="hour" maxlength="2" required>
+              <div class="col-sm-5">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <select class="form-control hour" name="hour" title="时"></select>
+                  </div>
+                  <div class="col-sm-6">
+                    <select class="form-control minute" name="minute" title="分"></select>
+                  </div>
+                </div>
               </div>
-              <div class="col-sm-2">
-                <input type="text" class="form-control" id="schedule_minute" name="minute" maxlength="2" required>
-              </div>
-              <label class="col-sm-1 control-label">h/m</label>
-            </div>
           </div>
+          <div class="form-group">
+              <label for="schedule_seat" class="col-sm-2 control-label">座位数</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="schedule_seat" name="seat" maxlength="4" placeholder="请输入座位数" required>
+              </div>
+            </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="reset" class="btn btn-default">重置</button>
@@ -145,6 +154,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 
     $(function () {
+        //设置小时的option
+        $(".hour").html(function () {
+            var str = "";
+            for (var i = 0; i < 24; i++) {
+                str += "<option value=\"" + i + "\">" + i + "</option>";
+            }
+            return str;
+        });
+
+        //设置分钟的option
+        $(".minute").html(function () {
+            var str = "";
+            for (var i = 0; i < 60; i += 5) {
+                str += "<option value=\"" + i + "\">" + i + "</option>";
+            }
+            return str;
+        });
 
         //Initialize Select2 Elements
         $(".select2").select2();
@@ -160,11 +186,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             todayBtn: "linked",
             autoclose: true
         }).datepicker("setDate", today);
+        
+
 
 
         var $schedule_add_form = $("#schedule_add_form");
         $schedule_add_form.submit(function () {
-            var start_time = $("#start_hour").val() + ":" + $("#start_minute").val();
 
             var $add_btn = $("#schedule_add_button");
 

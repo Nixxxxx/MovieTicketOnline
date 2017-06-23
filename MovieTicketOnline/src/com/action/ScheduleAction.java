@@ -67,18 +67,19 @@ public class ScheduleAction {
 	
 	@RequestMapping(value = "/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
-		int cinemaId = Integer.parseInt(request.getParameter("cinemaId"));
-		int movieId = Integer.parseInt(request.getParameter("movieId"));
-		Date startTime = Time.valueOf(request.getParameter("startTime"));
-		int seat =Integer.parseInt(request.getParameter("seat")); 
-		Schedule schedule = new Schedule(cinemaId, movieId, startTime, seat);
-		success = scheduleService.insert(schedule);
-		if(success)
-			msg = "更新成功";
-		else msg = "更新失败";
-		resultJson.put("msg",msg);
-		resultJson.put("success", success);
-		ResponseUtil.writeJson(response,resultJson);
+//		int cinemaId = Integer.parseInt(request.getParameter("cinemaId"));
+//		int movieId = Integer.parseInt(request.getParameter("movieId"));
+		System.out.println(request.getParameter("date")+" "+request.getParameter("hour")+" "+request.getParameter("minute"));
+//		Date startTime = Time.valueOf(request.getParameter("startTime"));
+//		int seat =Integer.parseInt(request.getParameter("seat")); 
+//		Schedule schedule = new Schedule(cinemaId, movieId, startTime, seat);
+//		success = scheduleService.insert(schedule);
+//		if(success)
+//			msg = "更新成功";
+//		else msg = "更新失败";
+//		resultJson.put("msg",msg);
+//		resultJson.put("success", success);
+//		ResponseUtil.writeJson(response,resultJson);
 	}
 	
 	@RequestMapping(value = "/del")
