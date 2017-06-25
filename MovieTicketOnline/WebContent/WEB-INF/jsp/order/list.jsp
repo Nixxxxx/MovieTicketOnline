@@ -102,26 +102,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <tr>
               <td>${status.index+1 }</td>
               <td class="order_user">
-	              <input type="hidden" value="${order.user.userName }">
-	              <input type="hidden" value="${order.user.email }">
-	              <input type="hidden" value="${order.user.mobile }">
-	              <a class="" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#user_modal" data-backdrop="static">
+	              <input class="user_userName" type="hidden" value="${order.user.userName }">
+	              <input class="user_email" type="hidden" value="${order.user.email }">
+	              <input class="user_mobile" type="hidden" value="${order.user.mobile }">
+	              <a class="user" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#user_modal" data-backdrop="static">
 	                  <i class="fa fa-edit"></i>查看用户</a></td>
               <td class="order_schedule">
-	              <input type="hidden" value="${order.schedule.cinema.name }">
-	              <input type="hidden" value="${order.schedule.movie.name }">
-	              <input type="hidden" value="${order.schedule.startTime }">
-	              <input type="hidden" value="${order.schedule.seat }">
-	              <input type="hidden" value="${order.schedule.reservation }">
-	              <a class="" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#schedule_modal" data-backdrop="static">
+	              <input class="cinemaName" type="hidden" value="${order.schedule.cinema.name }">
+	              <input class="movieName" type="hidden" value="${order.schedule.movie.name }">
+	              <input class="startTime" type="hidden" value="${order.schedule.startTime }">
+	              <input class="seat" type="hidden" value="${order.schedule.seat }">
+	              <input class="reservation" type="hidden" value="${order.schedule.reservation }">
+	              <a class="schedule" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#schedule_modal" data-backdrop="static">
 	                  <i class="fa fa-edit"></i>查看场次</a></td>
               <td class="order_amount">${order.amount }</td>
               <td class="order_address">${order.address }</td>
               <td class="order_mobile">${order.mobile }</td>
-              <td class="order_status">${order.status }</td>
+              <td class="order_status">
+              	<c:if test="${order.status == 0}" >
+              		<span class="text-yellow">已取消</span>
+              	</c:if>
+              	<c:if test="${order.status == 1}" >
+              		<span class="text-green">待处理</span>
+              	</c:if>
+              	<c:if test="${order.status == 2}" >
+              		<span class="text-bule">已确认</span>
+              	</c:if>
+              	<c:if test="${order.status == 3}" >
+              		<span class="text-light-blue">已完成</span>
+              	</c:if>
+	          </td>
               <td class="order_extra">${order.extra }</td>
               <td>
-                <a data-id="${order.orderId }" class="del" href="javascript:void(0)">
+                <a data-id="${order.orderId }" class="" href="javascript:void(0)">
                   <i class="fa fa-trash"></i> 确认订单</a>
               </td>
             </tr>
@@ -184,7 +197,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="submit" class="btn btn-info pull-right" id="schedule_update_button" data-loading-text="更新中...">更新</button>
+          </div>
+          <!-- /.box-footer -->
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="schedule_modal" tabindex="-1" role="dialog" aria-labelledby="schedule_update_label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h3 class="box-title" id="schedule_update_label">场次信息</h3>
+        </div>
+        <!-- /.box-header -->
+          <div class="box-body">
+            <div class="form-group">
+              <label for="cinemaName" class="col-sm-2 control-label">影院名</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control pull-right" id="cinemaName" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="movieName" class="col-sm-2 control-label">电影名</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control pull-right" id="movieName" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="startTime" class="col-sm-2 control-label">开始时间</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control pull-right" id="startTime" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="seat" class="col-sm-2 control-label">座位数</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control pull-right" id="seat" readonly>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="reservation" class="col-sm-2 control-label">预定数</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control pull-right" id="reservation" readonly>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
           </div>
           <!-- /.box-footer -->
       </div>
@@ -195,13 +263,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script>
     $(function(){
-    	$(".order_user").click(function () {
-            $("#movie_id").val($(this).data("id"));
-            $("#movie_number").val($(this).parent().prevAll(".movie_number").text());
-            $("#movie_name").val($(this).parent().prevAll(".movie_name").text());
-            $("#movie_time").val($(this).parent().prevAll(".movie_time").text());
-            $("#movie_status").val($(this).parent().prevAll(".movie_status").children("input").val());
-            $("#movie_introduce").val($(this).parent().prevAll(".movie_introduce").text());
+    	$(".user").click(function () {
+            $("#user_userName").val($(this).prevAll(".user_userName").val());
+            $("#user_email").val($(this).prevAll(".user_email").val());
+            $("#user_mobile").val($(this).prevAll(".user_mobile").val());
+        });
+    	
+    	$(".schedule").click(function () {
+            $("#cinemaName").val($(this).prevAll(".cinemaName").val());
+            $("#movieName").val($(this).prevAll(".movieName").val());
+            $("#startTime").val($(this).prevAll(".startTime").val());
+            $("#seat").val($(this).prevAll(".seat").val());
+            $("#reservation").val($(this).prevAll(".reservation").val());
         });
 
     })

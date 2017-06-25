@@ -36,6 +36,18 @@ public class OrderAction {
 	private boolean success;
 	private JSONObject resultJson = new JSONObject();
 	
+	@RequestMapping(value = "/info")
+	public ModelAndView info(){
+		int[] orderNumbers = new int[4];
+		List<Order> orders = orderService.findAll();
+		for (Order order:orders){
+			orderNumbers[Integer.parseInt(order.getStatus())]++;
+		}
+		ModelAndView mav = new ModelAndView("/info");
+		mav.addObject("orderNumbers", orderNumbers);
+		return mav;
+	}
+	
 	@RequestMapping(value = "/add")
 	public ModelAndView add(){
 		return new ModelAndView("/order/add");

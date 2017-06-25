@@ -69,8 +69,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- small box -->
       <div class="small-box bg-green">
         <div class="inner">
-          <h3>${taskNumbers[0] }</h3>
-          <p>已完成任务</p>
+          <h3>${orderNumbers[1] }</h3>
+          <p>待处理订单</p>
         </div>
         <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
@@ -80,8 +80,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- small box -->
       <div class="small-box bg-aqua">
         <div class="inner">
-          <h3>${taskNumbers[1] }</h3>
-          <p>待完成任务</p>
+          <h3>${orderNumbers[2] }</h3>
+          <p>已确认订单</p>
         </div>
         <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
@@ -91,8 +91,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <h3>${taskNumbers[2] }</h3>
-          <p>未按时完成任务</p>
+          <h3>${orderNumbers[3] }</h3>
+          <p>已完成订单</p>
         </div>
         <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
@@ -102,61 +102,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- small box -->
       <div class="small-box bg-red">
         <div class="inner">
-          <h3>${taskNumbers[3] }</h3>
-          <p>未完成任务</p>
+          <h3>${orderNumbers[0] }</h3>
+          <p>已取消订单</p>
         </div>
         <a data-pjax href="order/list" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">服务器基本信息</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body table-responsive">
-          <table class="table table-bordered">
-            <colgroup class="row">
-              <col class="col-xs-2">
-              <col class="col-xs-4">
-              <col class="col-xs-2">
-              <col class="col-xs-4">
-            </colgroup>
-            <tr>
-              <td>服务器操作系统：</td>
-              <td>Windows Server</td>
-              <td>服务器IP：</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Web 服务器：</td>
-              <td>apache-tomcat-7.0.72</td>
-              <td>Java 版本：</td>
-              <td>1.8.0_73</td>
-            </tr>
-            <tr>
-              <td>MySQL 版本：</td>
-              <td>5.5.8</td>
-              <td>当前时区：</td>
-              <td>Asia/Shanghai</td>
-            </tr>
-            <tr>
-              <td>文件上传最大：</td>
-              <td>50M</td>
-              <td>软件版本：</td>
-              <td>V1.0 beta</td>
-            </tr>
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-    </div>
-  </div>
-  <!-- /.row -->
 </section>
 <!-- /.content -->
 </body>

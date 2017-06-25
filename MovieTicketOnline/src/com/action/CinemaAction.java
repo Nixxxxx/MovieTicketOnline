@@ -30,13 +30,6 @@ public class CinemaAction {
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	
-	public CinemaService getCinemaService() {
-		return cinemaService;
-	}
-
-	public void setCinemaService(CinemaService cinemaService) {
-		this.cinemaService = cinemaService;
-	}
 
 	@RequestMapping(value="/add")
 	public ModelAndView add(){

@@ -33,15 +33,6 @@ public class UserAction {
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	
-
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-	
 	@RequestMapping(value="/add")
 	public ModelAndView add(){
 		return new ModelAndView("/user/add");

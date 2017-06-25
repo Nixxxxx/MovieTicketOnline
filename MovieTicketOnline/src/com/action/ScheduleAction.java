@@ -39,32 +39,6 @@ public class ScheduleAction {
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-	
-	public ScheduleService getScheduleService() {
-		return scheduleService;
-	}
-
-	public void setScheduleService(ScheduleService scheduleService) {
-		this.scheduleService = scheduleService;
-	}
-	
-	
-	
-	public MovieService getMovieService() {
-		return movieService;
-	}
-
-	public void setMovieService(MovieService movieService) {
-		this.movieService = movieService;
-	}
-
-	public CinemaService getCinemaService() {
-		return cinemaService;
-	}
-
-	public void setCinemaService(CinemaService cinemaService) {
-		this.cinemaService = cinemaService;
-	}
 
 	@RequestMapping(value="/add")
 	public ModelAndView add(){

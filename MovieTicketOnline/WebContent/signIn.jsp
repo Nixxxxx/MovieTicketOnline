@@ -105,8 +105,15 @@ $(function () {
             return false;
         }
         var $signInBtn = $("#signInBtn");
+        if(){
+        	url = "admin/signIn";
+        	href = "admin/index";
+        }else{
+        	url = "user/signIn";
+        	href = "user/index";
+        }
         $.ajax({
-            url: "admin/signIn",
+            url: url,
             type: "POST",
             data: {
             	adminName: adminName,
@@ -126,7 +133,7 @@ $(function () {
             },
             success: function (data) {
             	if(data.result == ""){
-            		window.location.href ="admin/index";
+            		window.location.href = href;
             	}else{
                     show_error(data.result);
             	}

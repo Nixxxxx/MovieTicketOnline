@@ -30,14 +30,6 @@ public class MovieAction {
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	
-	public MovieService getMovieService() {
-		return movieService;
-	}
-
-	public void setMovieService(MovieService movieService) {
-		this.movieService = movieService;
-	}
-	
 	@RequestMapping(value = "/add")
 	public ModelAndView add(){
 		return new ModelAndView("/movie/add");

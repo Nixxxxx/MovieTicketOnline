@@ -32,14 +32,6 @@ public class AdminAction {
 	private boolean success;
 	private JSONObject resultJson=new JSONObject();
 	
-	public AdminService getAdminService() {
-		return adminService;
-	}
-
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
-	}
-	
 	@RequestMapping(value="/signIn")
 	public void login(String adminName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
 		List<Admin> admins=adminService.findAll();
