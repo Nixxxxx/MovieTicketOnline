@@ -39,7 +39,7 @@ public class UserAction {
 	}
 	
 	@RequestMapping(value="/signIn")
-	public void login(String userName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
+	public void signIn(String adminName,String password,String captcha,String checkbox,HttpServletRequest request,HttpServletResponse response){
 		List<User> users=userService.findAll();
 		String sRand=(String)request.getSession().getAttribute("sRand");
 		int flag=0;
@@ -48,7 +48,7 @@ public class UserAction {
 		if(captcha.equalsIgnoreCase(sRand)){
 			flag=1;
 			for(User user:users){
-				if(user.getUserName().equals(userName)&&MD5Util.getMD5Code(password).equals(user.getPassword())){
+				if(user.getUserName().equals(adminName)&&MD5Util.getMD5Code(password).equals(user.getPassword())){
 					user=userService.findByUserId(user.getUserId());
 					request.getSession().setAttribute("user", user);
 					if("true".equals(checkbox)){

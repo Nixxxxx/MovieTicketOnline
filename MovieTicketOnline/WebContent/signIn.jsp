@@ -52,11 +52,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-lg btn-primary btn-block" id="signInBtn" data-loading-text="登录中...">立即登录</button>
-            <div class="text-center m-t m-b">
+            <div class="text-center">
+              <div class="col-xs-4">
             	<span class="left">记住我：</span>
                 <input id="checkbox" type="checkbox" name="checkbox"/>
+              </div>
+              <div class="col-xs-8">
+                <select class="form-control select2" id="type" style="width: 100%">
+                  <option value="0">用户</option>
+                  <option value="1">管理员</option>
+                </select>
+              </div>
             </div>	
+            <button type="submit" class="btn btn-lg btn-primary btn-block" id="signInBtn" data-loading-text="登录中...">立即登录</button>
             <div class="text-center m-t m-b"><a href="javascript:void(0);">Forgot password?</a></div>
             <div class="line line-dashed"></div>
         </form>
@@ -71,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </body>
 <!-- jQuery 3.1.1 -->
-<script src="${pageContext.request.contextPath}/static/dist/jQuery/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/plugins/jQuery/jquery-3.1.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
 <script>
 $(function () {
@@ -105,12 +113,12 @@ $(function () {
             return false;
         }
         var $signInBtn = $("#signInBtn");
-        if(){
+        if($("#type").val() == 1){
         	url = "admin/signIn";
         	href = "admin/index";
         }else{
         	url = "user/signIn";
-        	href = "user/index";
+        	href = "index.jsp";
         }
         $.ajax({
             url: url,

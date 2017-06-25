@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- logo -->
   <link rel="shortcut icon" href="/MovieTicketOnline/static/dist/img/favicon.png">
   <!--  jQuery 3.1.1 -->
-  <script src="/MovieTicketOnline/static/dist/jQuery/jquery-3.1.1.min.js"></script>
+  <script src="/MovieTicketOnline/static/plugins/jQuery/jquery-3.1.1.min.js"></script>
   <!--  Bootstrap 3.3.6  -->
   <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
   <script src="/MovieTicketOnline/static/bootstrap/js/bootstrap.min.js"></script>
