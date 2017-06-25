@@ -81,7 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="schedule_cinema" class="col-sm-2 control-label">影院</label>
               <div class="col-sm-10">
-                <select class="form-control select2" name="cinema" id="schedule_cinema" style="width: 100%">
+                <select class="form-control select2" name="cinemaId" id="schedule_cinemaId" style="width: 100%">
                   <c:if test="${cinemas != null }">
                     <option value="">请选择影院</option>
                     <c:forEach var="cinema" items="${cinemas }">
@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="form-group">
               <label for="schedule_movie" class="col-sm-2 control-label">电影</label>
               <div class="col-sm-10">
-                <select class="form-control select2" name="movie" id="schedule_movie" style="width: 100%">
+                <select class="form-control select2" name="movieId" id="schedule_movieId" style="width: 100%">
                   <c:if test="${movies != null }">
                     <option value="">请选择电影</option>
                     <c:forEach var="movie" items="${movies }">
@@ -123,10 +123,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div class="col-sm-5">
                 <div class="row">
                   <div class="col-sm-6">
-                    <select class="form-control hour" name="hour" title="时"></select>
+                    <select class="form-control hour" id="schedule_hour" name="hour" title="时"></select>
                   </div>
                   <div class="col-sm-6">
-                    <select class="form-control minute" name="minute" title="分"></select>
+                    <select class="form-control minute" id="schedule_minute" name="minute" title="分"></select>
                   </div>
                 </div>
               </div>
@@ -209,9 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        //菜单栏当前选中
-                        $now_selected = $("ul.treeview-menu>li.active>a");
-                        $now_selected.trigger("click");
+                        window.location.href = "schedule/add";
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

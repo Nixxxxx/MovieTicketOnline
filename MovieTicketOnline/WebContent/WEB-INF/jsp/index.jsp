@@ -176,12 +176,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </ul>
         </li>
         <li class="treeview">
-          <a href="#"> <i class="fa fa-clock-o"></i> <span>时段管理</span> <span class="pull-right-container">
+          <a href="#"> <i class="fa fa-clock-o"></i> <span>场次管理</span> <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span> </a>
             <ul class="treeview-menu">
-              <li><a href="schedule/add" target="container"><i class="fa fa-circle-o"></i> 添加时段 </a></li>
-              <li><a href="schedule/list" target="container"><i class="fa fa-circle-o"></i> 时段列表 </a></li>
+              <li><a href="schedule/add" target="container"><i class="fa fa-circle-o"></i> 添加场次 </a></li>
+              <li><a href="schedule/list" target="container"><i class="fa fa-circle-o"></i> 场次列表 </a></li>
             </ul>
         </li>
         <li class="treeview">

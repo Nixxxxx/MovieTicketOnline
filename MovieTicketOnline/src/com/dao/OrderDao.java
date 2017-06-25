@@ -69,7 +69,7 @@ public class OrderDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Order> findPage(PageBean pageBean, Order s_order){
-		StringBuffer sb=new StringBuffer("from Order");
+		StringBuffer sb = new StringBuffer("from Order");
 //		if(s_admin!=null){
 //			if(StringUtil.isNotEmpty(s_admin.getNumber())){
 //				sb.append(" and deptName like '%"+s_admin.getName()+"%'");
@@ -80,7 +80,7 @@ public class OrderDao {
 		Query q = session.createQuery(sb.toString());
 		q.setFirstResult(pageBean.getStart());
         q.setMaxResults(pageBean.getPageSize());
-        List<Order> orderList=q.list();
+        List<Order> orderList = q.list();
         tx.commit();
         session.close();
 		return orderList;

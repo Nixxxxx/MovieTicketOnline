@@ -90,30 +90,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>时段</th>
-              <th>备注</th>
-              <th>更新时间</th>
+              <th>影院</th>
+              <th>电影</th>
+              <th>开始时间</th>
+              <th>座位数</th>
               <th>操作</th>
             </tr>
             </thead>
-            <c:if test="${ttimeList!=null }" >
-            <c:forEach var="ttime" items="${ttimeList }" varStatus="status">
+            <c:if test="${scheduleList!=null }" >
+            <c:forEach var="schedule" items="${scheduleList }" varStatus="status">
             <tr>
               <td>${status.index+1 }</td>
-              <td class="time_range"><fmt:formatDate value="${ttime.startTime}" pattern="HH:mm"/>-<fmt:formatDate value="${ttime.endTime}" pattern="HH:mm"/></td>
-              <td class="time_extra">${ttime.extra }</td>
-              <td>${ttime.addTime }</td>
+              <td class="schedule_cinema">${schedule.cinema.name }</td>
+              <td class="schedule_movie">${schedule.movie.name }</td>
+              <td class="schedule_startTime"><fmt:formatDate value="${schedule.startTime}" pattern="yyyy-MM-dd|HH:mm"/></td>
+              <td class="schedule_seat">${schedule.seat }</td>
               <td>
-                <a data-id="${ttime.id }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#time_update_modal" data-backdrop="static">
+                <a data-id="${schedule.scheduleId }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#schedule_update_modal" data-backdrop="static">
                   <i class="fa fa-edit"></i>编辑</a>
-                <a data-id="${ttime.id }" class="del" href="javascript:void(0)">
+                <a data-id="${schedule.scheduleId }" class="del" href="javascript:void(0)">
                   <i class="fa fa-trash"></i> 删除</a>
               </td>
             </tr>
             </c:forEach>
             </c:if>
-            <c:if test="${ttimeList==null }" >
-            	<tr><td colspan="5">无记录！</td></tr>
+            <c:if test="${scheduleList==null }" >
+            	<tr><td colspan="6">无记录！</td></tr>
             </c:if>
           </table>
         </div>
@@ -135,7 +137,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 
 <!-- Modal -->
-<div class="modal fade" id="time_update_modal" tabindex="-1" role="dialog" aria-labelledby="time_update_label">
+<div class="modal fade" id="schedule_update_modal" tabindex="-1" role="dialog" aria-labelledby="schedule_update_label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <!-- Horizontal Form -->
@@ -143,50 +145,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="box-header with-border">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h3 class="box-title" id="time_update_label">编辑时段</h3>
+          <h3 class="box-title" id="schedule_update_label">编辑场次</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="post" id="time_update_form">
+        <form class="form-horizontal" method="post" id="schedule_update_form">
           <div class="box-body">
-            <input type="hidden" id="time_id" name="id">
+            <input type="hidden" id="schedule_id" name="scheduleId">
             <div class="form-group">
-              <label class="col-sm-3 control-label">开始时间</label>
+              <label for="schedule_date" class="col-sm-2 control-label">日期</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control pull-right" id="schedule_date" name="date">
+              </div>
+              <label class="col-sm-2 control-label">开始时间</label>
               <div class="col-sm-5">
                 <div class="row">
                   <div class="col-sm-6">
-                    <select class="form-control hour" id="start_hour" title="时"></select>
+                    <select class="form-control hour" id="schedule_hour" name="hour" title="时"></select>
                   </div>
                   <div class="col-sm-6">
-                    <select class="form-control minute" id="start_minute" title="分"></select>
+                    <select class="form-control minute" id="schedule_minute" name="minute" title="分"></select>
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">结束时间</label>
-              <div class="col-sm-5">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <select class="form-control hour" id="end_hour" title="时"></select>
-                  </div>
-                  <div class="col-sm-6">
-                    <select class="form-control minute" id="end_minute" title="分"></select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="time_extra" class="col-sm-3 control-label">备注</label>
-              <div class="col-sm-8">
-                <textarea class="form-control" rows="3" id="time_extra" name="extra" placeholder="请输入备注，100字以内，选填"></textarea>
+              <label for="schedule_seat" class="col-sm-2 control-label">座位数</label>
+              <div class="col-sm-10">
+                <input class="form-control" id="schedule_seat" name="seat" maxlength="4" placeholder="请输入座位数" required>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="submit" class="btn btn-info pull-right" id="time_update_button" data-loading-text="更新中...">更新</button>
+            <button type="submit" class="btn btn-info pull-right" id="schedule_update_button" data-loading-text="更新中...">更新</button>
           </div>
           <!-- /.box-footer -->
         </form>
@@ -198,42 +191,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script>
     $(function(){
-
-        //设置小时的option
-        $(".hour").html(function () {
-            var str = "";
-            for (var i = 0; i < 24; i++) {
-                str += "<option value=\"" + i + "\">" + i + "</option>";
-            }
-            return str;
-        });
-
-        //设置分钟的option
-        $(".minute").html(function () {
-            var str = "";
-            for (var i = 0; i < 60; i += 10) {
-                str += "<option value=\"" + i + "\">" + i + "</option>";
-            }
-            return str;
-        });
+    	
 
         //删除
         $(".del").click(function () {
 
             if (confirm("确认要删除吗？")) {
-                var id = $(this).data("id");
+                var scheduleId = $(this).data("id");
                 $.ajax({
-                    url: "/Xungeng/ttime/del",
+                    url: "schedule/del",
                     type: "POST",
-                    data: {id: id},
+                    data: {scheduleId: scheduleId},
                     dataType: "json",
                     success: function (data) {
                         alert(data.msg);
                         if (data.success) {
-                            //菜单栏当前选中
-                            window.location.href="/Xungeng/ttime/showList";
-                            $now_selected = $("ul.treeview-menu>li.active>a");
-                            $now_selected.trigger("click");
+                            window.location.href="schedule/list";
                         }
                     },
                     error: function (XMLHttpRequest, textStatus) {
@@ -249,41 +222,65 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //更新modal
         $(".update").click(function () {
-            $("#time_id").val($(this).data("id"));
+        	
+        	//设置小时的option
+            $("#schedule_hour").html(function () {
+                var str = "";
+                for (var i = 0; i < 24; i++) {
+                    str += "<option value=\"" + i + "\">" + i + "</option>";
+                }
+                return str;
+            });
+
+            //设置分钟的option
+            $("#schedule_minute").html(function () {
+                var str = "";
+                for (var i = 0; i < 60; i += 5) {
+                    str += "<option value=\"" + i + "\">" + i + "</option>";
+                }
+                return str;
+            });
+
+            
+            $("#schedule_id").val($(this).data("id"));
 
             //解析时间范围
-            var time_range = $(this).parent().prevAll(".time_range").text();
-            var time_arr = time_range.split("-");
+            var schedule_startTime = $(this).parent().prevAll(".schedule_startTime").text();
+            var schedule_arr = schedule_startTime.split("|");
             //去除 如01前边的0
-            var start_hour = ~~time_arr[0].split(":")[0];//~是按位取反运算，~~是取反两次 经过位运算的会自动变成整数 同parseInt()
-            var start_minute = ~~time_arr[0].split(":")[1];
-            var end_hour = ~~time_arr[1].split(":")[0];
-            var end_minute = ~~time_arr[1].split(":")[1];
+            var hour = ~~schedule_arr[1].split(":")[0];//~是按位取反运算，~~是取反两次 经过位运算的会自动变成整数 同parseInt()
+            var minute = ~~schedule_arr[1].split(":")[1];
+            
+            $("#schedule_hour").val(hour);
+            $("#schedule_minute").val(minute);
+            $("#schedule_seat").val($(this).parent().prevAll(".schedule_seat").text());
 
-            $("#start_hour").val(start_hour);
-            $("#start_minute").val(start_minute);
-            $("#end_hour").val(end_hour);
-            $("#end_minute").val(end_minute);
+            var todaya = schedule_arr[0].split("-");
+            var today = (new Date(parseInt(todaya[0]),parseInt(todaya[1])-1,parseInt(todaya[2]))).toDateString();
 
-            $("#time_extra").val($(this).parent().prevAll(".time_extra").text());
-        });
+            //Date picker
+            $("#schedule_date").datepicker({
+                language: "zh-CN",
+                startDate: today,
+                format: "yyyy-mm-dd",
+                todayHighlight: true,
+                todayBtn: "linked",
+                autoclose: true
+            }).datepicker("setDate", new Date().toDateString());
 
-        //更新
-        var $time_update_form = $("#time_update_form");
-        $time_update_form.submit(function () {
+            
 
-            var id = $("#time_id").val();
-            var start_time = $("#start_hour").val() + ":" + $("#start_minute").val();
-            var end_time = $("#end_hour").val() + ":" + $("#end_minute").val();
-            var extra = $("#time_extra").val();
+	        //更新
+        var $schedule_update_form = $("#schedule_update_form");
+        $schedule_update_form.submit(function () {
 
-            var $update_btn = $("#time_update_button");
+            var $update_btn = $("#schedule_update_button");
 
             $.ajax({
-                url: "/Xungeng/ttime/update",
+                url: "schedule/update",
                 type: "POST",
                 dataType: "json",
-                data: {id: id, startTime: start_time, endTime: end_time, extra: extra},
+                data: $schedule_update_form.serialize(),
                 beforeSend: function () {
                     $update_btn.button("loading");
                 },
@@ -293,10 +290,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        //菜单栏当前选中
-                        $now_selected = $("ul.treeview-menu>li.active>a");
-                        $now_selected.trigger("click");
-                        $("#time_update_modal").modal("hide");
+						window.location.href="schedule/list";
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {
@@ -309,7 +303,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
             return false;
         });
-    })
+      });
+   })
 </script>
 </body>
 </html>

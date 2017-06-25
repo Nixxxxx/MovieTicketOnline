@@ -38,25 +38,25 @@ public class MovieAction {
 		this.movieService = movieService;
 	}
 	
-	@RequestMapping(value="/add")
+	@RequestMapping(value = "/add")
 	public ModelAndView add(){
 		return new ModelAndView("/movie/add");
 	}
 	
-	@RequestMapping(value="/list")
+	@RequestMapping(value = "/list")
 	public ModelAndView showList(Movie s_movie,HttpServletRequest request){
 		ModelAndView mav=new ModelAndView("/movie/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
 			page="1";
 		}else{
-			s_movie=(Movie) request.getSession().getAttribute("s_movie");
+			s_movie = (Movie) request.getSession().getAttribute("s_movie");
 		}
-		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
-		List<Movie> movieList=movieService.findPage(pageBean, s_movie);
-		int total=movieService.findAll().size();
+		PageBean pageBean =  new PageBean(Integer.parseInt(page),10);
+		List<Movie> movieList = movieService.findPage(pageBean, s_movie);
+		int total = movieService.findAll().size();
 		if(total>0){
-			String pageCode=PageUtil.rootPageTion("movie/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			String pageCode = PageUtil.rootPageTion("movie/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
 			mav.addObject("pageCode", pageCode);
 			mav.addObject("movieList", movieList);
 		}

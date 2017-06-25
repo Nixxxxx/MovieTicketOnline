@@ -1,10 +1,18 @@
 package com.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,6 +26,7 @@ public class Movie {
 	private String time;
 	private String status = "0";
 	private String introduce;
+	private Set<Schedule> schedules = new HashSet<Schedule>();
 	
 	public Movie() {
 		super();
@@ -79,5 +88,17 @@ public class Movie {
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
+
+	@OneToMany(fetch=FetchType.LAZY,cascade = CascadeType.MERGE)
+	@JoinColumn(name = "movieId")
+	@Transient
+	public Set<Schedule> getSchedules() {
+		return schedules;
+	}
+
+	public void setSchedules(Set<Schedule> schedule) {
+		this.schedules = schedule;
+	}
+	
 	
 }

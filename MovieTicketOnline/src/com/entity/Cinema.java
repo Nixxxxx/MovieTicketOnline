@@ -1,11 +1,19 @@
 package com.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -16,6 +24,7 @@ public class Cinema {
 	private String number;
 	private String name;
 	private String address;
+	private Set<Schedule> schedules = new HashSet<Schedule>();
 	
 	public Cinema() {
 		super();
@@ -62,5 +71,18 @@ public class Cinema {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	@OneToMany
+	@Cascade(value={CascadeType.SAVE_UPDATE})
+	@JoinColumn(name="cinemaId")
+	@Transient
+	public Set<Schedule> getSchedules() {
+		return schedules;
+	}
+
+	public void setSchedules(Set<Schedule> schedules) {
+		this.schedules = schedules;
+	}
+	
 	
 }

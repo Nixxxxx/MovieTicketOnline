@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -15,15 +17,21 @@ import org.hibernate.annotations.GenericGenerator;
 public class Schedule {
 
 	private int scheduleId;
-	private int cinemaId;
-	private int movieId;
+	private Cinema cinema;
+	private Movie movie;
 	private Date startTime;
 	private int seat;
 	private int reservation;
 	
-	public Schedule(int cinemaId, int movieId, Date startTime, int seat){
-		this.cinemaId = cinemaId;
-		this.movieId = movieId;
+	
+	
+	public Schedule() {
+		super();
+	}
+
+	public Schedule(Cinema cinema, Movie movie, Date startTime, int seat){
+		this.cinema = cinema;
+		this.movie = movie;
 		this.startTime = startTime;
 		this.seat = seat;
 	}
@@ -39,20 +47,22 @@ public class Schedule {
 		this.scheduleId = scheduleId;
 	}
 	
-	@Column(name="cinemaId", nullable = false, length=10)
-	public int getCinemaId() {
-		return cinemaId;
+	@ManyToOne
+	@JoinColumn(name="cinemaId")
+	public Cinema getCinema() {
+		return cinema;
 	}
-	public void setCinemaId(int cinemaId) {
-		this.cinemaId = cinemaId;
+	public void setCinema(Cinema cinema) {
+		this.cinema = cinema;
 	}
 	
-	@Column(name="movieId", nullable = false, length=10)
-	public int getMovieId() {
-		return movieId;
+	@ManyToOne
+	@JoinColumn(name="movieId")
+	public Movie getMovie() {
+		return movie;
 	}
-	public void setMovieId(int movieId) {
-		this.movieId = movieId;
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 	
 	@Column(name="startTime", nullable = false)

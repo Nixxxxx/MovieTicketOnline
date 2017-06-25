@@ -1,7 +1,5 @@
 package com.action;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.entity.Order;
 import com.entity.PageBean;
 import com.service.OrderService;
+import com.service.ScheduleService;
+import com.service.UserService;
 import com.util.PageUtil;
 import com.util.ResponseUtil;
 import com.util.StringUtil;
@@ -27,51 +27,49 @@ public class OrderAction {
 
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private ScheduleService scheduleService;
 
 	private String msg;
 	private boolean success;
-	private JSONObject resultJson=new JSONObject();
+	private JSONObject resultJson = new JSONObject();
 	
-	public OrderService getOrderService() {
-		return orderService;
-	}
-
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
-	
-	@RequestMapping(value="/add")
+	@RequestMapping(value = "/add")
 	public ModelAndView add(){
 		return new ModelAndView("/order/add");
 	}
 	
-	@RequestMapping(value="/list")
+	@RequestMapping(value = "/list")
 	public ModelAndView showList(Order s_order,HttpServletRequest request){
-		ModelAndView mav=new ModelAndView("/order/list");
+		ModelAndView mav = new ModelAndView("/order/list");
 		String page=request.getParameter("page");
 		if(StringUtil.isEmpty(page)){
-			page="1";
+			page = "1";
 		}else{
-			s_order=(Order) request.getSession().getAttribute("s_order");
+			s_order = (Order) request.getSession().getAttribute("s_order");
 		}
-		PageBean pageBean=new PageBean(Integer.parseInt(page),10);
-		List<Order> orderList=orderService.findPage(pageBean, s_order);
-		int total=orderService.findAll().size();
+		PageBean pageBean = new PageBean(Integer.parseInt(page),10);
+		List<Order> orderList = orderService.findPage(pageBean, s_order);
+		int total = orderService.findAll().size();
 		if(total>0){
-			String pageCode=PageUtil.rootPageTion("order/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
+			String pageCode = PageUtil.rootPageTion("order/list",total, pageBean.getPage(),pageBean.getPageSize(),null,null);
 			mav.addObject("pageCode", pageCode);
 			mav.addObject("orderList", orderList);
 		}
 		return mav;
 	}
 	
-	@RequestMapping(value="/insert")
+	@RequestMapping(value = "/insert")
 	public void insert(HttpServletRequest request,HttpServletResponse response){
-		Date startTime = Time.valueOf(request.getParameter("startTime")+":00");
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
 		String adress = request.getParameter("adress");
 		String mobile = request.getParameter("mobile");
-		Order order = new Order(startTime, amount, adress, mobile);
+		String extra = request.getParameter("extra");
+		Order order = new Order(userService.findByUserId(userId), scheduleService.findByscheduleId(scheduleId), amount, adress, mobile,extra);
 		orderService.insert(order);
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);

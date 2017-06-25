@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <ol class="breadcrumb">
-    <li><a href="/Xungeng/main/showInfo"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li><a href="order/info"><i class="fa fa-dashboard"></i> 首页</a></li>
     <li>地点管理</li>
     <li class="active">地点列表</li>
   </ol>
@@ -87,32 +87,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>地点编号</th>
-              <th>地点名</th>
+              <th>用户</th>
+              <th>场次</th>
+              <th>数量</th>
+              <th>地址</th>
+              <th>手机</th>
+              <th>状态</th>
               <th>备注</th>
-              <th>更新时间</th>
               <th>操作</th>
             </tr>
             </thead>
-            <c:if test="${locationList!=null }" >
-            <c:forEach var="location" items="${locationList }" varStatus="status">
+            <c:if test="${orderList != null }" >
+            <c:forEach var="order" items="${orderList }" varStatus="status">
             <tr>
               <td>${status.index+1 }</td>
-              <td class="location_number">${location.number }</td>
-              <td class="location_name">${location.name }</td>
-              <td class="location_extra">${location.extra }</td>
-              <td>${location.addTime }</td>
+              <td class="order_user">
+	              <input type="hidden" value="${order.user.userName }">
+	              <input type="hidden" value="${order.user.email }">
+	              <input type="hidden" value="${order.user.mobile }">
+	              <a class="" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#user_modal" data-backdrop="static">
+	                  <i class="fa fa-edit"></i>查看用户</a></td>
+              <td class="order_schedule">
+	              <input type="hidden" value="${order.schedule.cinema.name }">
+	              <input type="hidden" value="${order.schedule.movie.name }">
+	              <input type="hidden" value="${order.schedule.startTime }">
+	              <input type="hidden" value="${order.schedule.seat }">
+	              <input type="hidden" value="${order.schedule.reservation }">
+	              <a class="" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#schedule_modal" data-backdrop="static">
+	                  <i class="fa fa-edit"></i>查看场次</a></td>
+              <td class="order_amount">${order.amount }</td>
+              <td class="order_address">${order.address }</td>
+              <td class="order_mobile">${order.mobile }</td>
+              <td class="order_status">${order.status }</td>
+              <td class="order_extra">${order.extra }</td>
               <td>
-                <a data-id="${location.id }" class="update" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#location_update_modal" data-backdrop="static">
-                  <i class="fa fa-edit"></i>编辑</a> |
-                <a data-id="${location.id }" class="del" href="javascript:void(0)">
-                  <i class="fa fa-trash"></i> 删除</a>
+                <a data-id="${order.orderId }" class="del" href="javascript:void(0)">
+                  <i class="fa fa-trash"></i> 确认订单</a>
               </td>
             </tr>
             </c:forEach>
             </c:if>
-            <c:if test="${locationList==null }" >
-            	<tr><td colspan="6">无记录！</td></tr>
+            <c:if test="${orderList == null }" >
+            	<tr><td colspan="9">无记录！</td></tr>
             </c:if>
           </table>
         </div>
@@ -134,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- /.content -->
 
 <!-- Modal -->
-<div class="modal fade" id="location_update_modal" tabindex="-1" role="dialog" aria-labelledby="location_update_label">
+<div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="schedule_update_label">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <!-- Horizontal Form -->
@@ -142,39 +158,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="box-header with-border">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h3 class="box-title" id="location_update_label">编辑地点</h3>
+          <h3 class="box-title" id="schedule_update_label">用户信息</h3>
         </div>
         <!-- /.box-header -->
-        <!-- form start -->
-        <form class="form-horizontal" method="post" id="location_update_form">
           <div class="box-body">
-            <input type="hidden" id="location_id" name="id">
             <div class="form-group">
-              <label for="location_number" class="col-sm-2 control-label">编号</label>
+              <label for="user_userName" class="col-sm-2 control-label">用户名</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="location_number" name="number" placeholder="请输入地点编号" required>
+                <input type="text" class="form-control pull-right" id="user_userName" readonly>
               </div>
             </div>
             <div class="form-group">
-              <label for="location_name" class="col-sm-2 control-label">地点名</label>
+              <label for="user_email" class="col-sm-2 control-label">email</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="location_name" name="name" maxlength="10" placeholder="请输入地点名" required>
+                <input type="text" class="form-control pull-right" id="user_email" readonly>
               </div>
             </div>
             <div class="form-group">
-              <label for="location_extra" class="col-sm-2 control-label">备注</label>
+              <label for="user_mobile" class="col-sm-2 control-label">mobile</label>
               <div class="col-sm-10">
-                <textarea class="form-control" rows="3" id="location_extra" name="extra" placeholder="请输入备注，100字以内，选填"></textarea>
+                <input type="text" class="form-control pull-right" id="user_mobile" readonly>
               </div>
             </div>
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="submit" class="btn btn-info pull-right" id="location_update_button" data-loading-text="更新中...">更新</button>
+            <button type="submit" class="btn btn-info pull-right" id="schedule_update_button" data-loading-text="更新中...">更新</button>
           </div>
           <!-- /.box-footer -->
-        </form>
       </div>
       <!-- /.box -->
     </div>
@@ -183,82 +195,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script>
     $(function(){
-
-        //删除
-        $(".del").click(function () {
-
-            if (confirm("确认要删除吗？")) {
-                var id = $(this).data("id");
-                $.ajax({
-                    url: "/Xungeng/location/del",
-                    type: "POST",
-                    data: {id: id},
-                    dataType: "json",
-                    success: function (data) {
-                        alert(data.msg);
-                        if (data.success) {
-                            //菜单栏当前选中
-                            window.location.href="/Xungeng/location/showList";
-                            $now_selected = $("ul.treeview-menu>li.active>a");
-                            $now_selected.trigger("click");
-                        }
-                    },
-                    error: function (XMLHttpRequest, textStatus) {
-                        if (textStatus === "timeout") {
-                            alert("删除超时！");
-                        } else {
-                            alert("删除失败！");
-                        }
-                    }
-                })
-            }
+    	$(".order_user").click(function () {
+            $("#movie_id").val($(this).data("id"));
+            $("#movie_number").val($(this).parent().prevAll(".movie_number").text());
+            $("#movie_name").val($(this).parent().prevAll(".movie_name").text());
+            $("#movie_time").val($(this).parent().prevAll(".movie_time").text());
+            $("#movie_status").val($(this).parent().prevAll(".movie_status").children("input").val());
+            $("#movie_introduce").val($(this).parent().prevAll(".movie_introduce").text());
         });
 
-        //更新modal
-        $(".update").click(function () {
-            $("#location_id").val($(this).data("id"));
-            $("#location_number").val($(this).parent().prevAll(".location_number").text());
-            $("#location_name").val($(this).parent().prevAll(".location_name").text());
-            $("#location_extra").val($(this).parent().prevAll(".location_extra").text());
-        });
-
-        //更新
-        var $location_update_form = $("#location_update_form");
-        $location_update_form.submit(function () {
-
-            var $update_btn = $("#location_update_button");
-
-            $.ajax({
-                url: "/Xungeng/location/update",
-                type: "POST",
-                dataType: "json",
-                data: $location_update_form.serialize(),
-                beforeSend: function () {
-                    $update_btn.button("loading");
-                },
-                complete: function () {
-                    $update_btn.button("reset");
-                },
-                success: function (data) {
-                    alert(data.msg);
-                    if (data.success) {
-                        //菜单栏当前选中
-                        window.location.href="/Xungeng/location/showList";
-                        $now_selected = $("ul.treeview-menu>li.active>a");
-                        $now_selected.trigger("click");
-                        $("#location_update_modal").modal("hide");
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus) {
-                    if (textStatus === "timeout") {
-                        alert("更新超时！");
-                    } else {
-                        alert("更新失败！");
-                    }
-                }
-            });
-            return false;
-        });
     })
 </script>
 </body>
