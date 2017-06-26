@@ -181,10 +181,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script>
     $(function(){
-
         //删除
         $(".del").click(function () {
-
             if (confirm("确认要删除吗？")) {
                 var userId = $(this).data("id");
                 $.ajax({
@@ -209,7 +207,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 })
             }
         });
-
         //更新modal
         $(".update").click(function () {
             $("#user_id").val($(this).data("id"));
@@ -217,13 +214,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $("#user_email").val($(this).parent().prevAll(".user_email").text());
             $("#user_mobile").val($(this).parent().prevAll(".user_mobile").text());
         });
-
         //更新
         var $user_update_form = $("#user_update_form");
         $user_update_form.submit(function () {
-
             var $update_btn = $("#user_update_button");
-
             $.ajax({
                 url: "user/update",
                 type: "POST",

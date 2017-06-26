@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>电票贩</title>
+  <title>无线巡更管理中心</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <base href="<%=basePath%>">
@@ -87,8 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>用户</th>
-              <th>场次</th>
+              <th>查看场次</th>
               <th>数量</th>
               <th>地址</th>
               <th>手机</th>

@@ -40,6 +40,10 @@ public class MovieService {
 		return movieDao.findPage(pageBean, s_movie);
 	}
 	
+	public List<Movie> find(String status){
+		return movieDao.find(status);
+	}
+	
 	public List<Movie> findAll(){
 		return movieDao.findAll();
 	}
