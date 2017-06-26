@@ -58,7 +58,7 @@ public class MovieAction {
 	public boolean checkNumber(String number, int movieId){
 		List<Movie> movies = movieService.findAll();
 		for(Movie movie:movies){
-			if(number.equals(movie.getNumber()) || movie.getMovieId() != movieId)
+			if(number.equals(movie.getNumber()) && movie.getMovieId() != movieId)
 				return false;
 		}
 		return true;

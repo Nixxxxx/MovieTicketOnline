@@ -96,5 +96,9 @@ public class OrderDao {
 		return (Order) this.hibernateTemplate.get(Order.class, orderId);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Order> find(int userId) {
+		return (List<Order>) this.hibernateTemplate.find("from Order o where o.user.userId=?", userId);
+	}
 
 }

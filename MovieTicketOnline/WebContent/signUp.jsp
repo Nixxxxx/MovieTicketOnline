@@ -29,16 +29,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="wrapper text-center">
             <strong>Sign up</strong>
         </div>
-        <form id="signUpForm">
-            <div class="text-danger wrapper-xs text-center invisible" id="errorMsg">
+        <form id="signUp_form">
+            <div class="text-danger wrapper-xs text-center invisible" id="error_msg">
                 	错误信息
             </div>
             <div class="list-group list-group-sm">
                 <div class="list-group-item">
-                    <input type="text" name="userName" id="userName" placeholder="Username" class="form-control no-border">
+                    <input type="text" name="userName" id="user_userName" placeholder="Username" class="form-control no-border">
                 </div>
                 <div class="list-group-item">
-                    <input type="password" name="password" id="password" placeholder="Password" class="form-control no-border">
+                    <input type="password" name="password" id="user_password" placeholder="Password" class="form-control no-border">
+                </div>
+                <div class="list-group-item">
+                    <input type="text" name="email" id="user_email" placeholder="Email" class="form-control no-border" required>
+                </div>
+                <div class="list-group-item">
+                    <input type="text" name="mobile" id="user_mobile" placeholder="Mobile" class="form-control no-border" required>
                 </div>
                 <div class="list-group-item">
                     <div class="row">
@@ -52,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-lg btn-primary btn-block" id="signUpBtn" data-loading-text="注册中...">立即注册</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" id="signUp_btn" data-loading-text="注册中...">立即注册</button>
             <div class="line line-dashed"></div>
         </form>
     </div>
@@ -70,67 +76,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="${pageContext.request.contextPath}/static/bootstrap/js/bootstrap.min.js"></script>
 <script>
 $(function () {
-    var $errorMsg = $("#errorMsg");
+    var $error_msg = $("#error_msg");
 
-    var showError = function (errorMsg) {
-        $errorMsg.text(errorMsg).removeClass("invisible");
+    var show_error = function (error_msg) {
+        $error_msg.text(error_msg).removeClass("invisible");
     };
 
-    $("#signUpForm").submit(function () {
-        $errorMsg.addClass("invisible")
-        var userName = $.trim($("#userName").val());
-        var password = $.trim($("#password").val());
+    $("#signUp_form").submit(function () {
+        $error_msg.addClass("invisible")
+        var userName = $.trim($("#user_userName").val());
+        var password = $.trim($("#user_password").val());
+        var email = $.trim($("#user_email").val());
+        var mobile = $.trim($("#user_mobile").val());
         var captcha = $.trim($("#captcha").val());
         var u_pattern = /^[a-zA-Z0-9_@]{4,20}$/;
         var c_pattern = /^[a-zA-Z0-9]{4}$/;
-        if (!u_pattern.test(userName)) {
-            showError("请输入正确格式的用户名");
+        if (!c_pattern.test(captcha)) {
+            show_error("请输入正确格式的验证码");
             return false;
         }
-        if (password == "") {
-            showError("请输入密码");
+        if (!u_pattern.test(userName)) {
+            show_error("请输入正确格式的用户名");
             return false;
         }
         if (!u_pattern.test(password)) {
-            showError("请输入正确格式的密码");
+            show_error("请输入正确格式的密码");
             return false;
         }
-        if (!c_pattern.test(captcha)) {
-            showError("请输入正确格式的验证码");
-            return false;
-        }
-        var $signUpBtn = $("#signUpBtn");
+        var $signUp_btn = $("#signUp_btn");
         $.ajax({
-            url: "admin/signUp",
+            url: "user/signUp",
             type: "POST",
             data: {
                 userName: userName,
                 password: password,
+                email: email,
+        		mobile: mobile,
                 captcha: captcha,
                 checkbox:$("#checkbox").prop("checked")
             },
             dataType: "json",
             beforeSend: function () {
-                $signUpBtn.button("loading");
+                $signUp_btn.button("loading");
             },
             complete: function () {
                 //重置登录按钮
-                $signUpBtn.button("reset");
+                $signUp_btn.button("reset");
                 //重置验证码
                 $("#randImage").trigger("click");
             },
             success: function (data) {
-            	if(data.result==""){
-            		window.location.href ="admin/index";
+            	if(data.success){
+            		window.location.href ="signIn.jsp";
             	}else{
-                    showError(data.result);
+                    show_error(data.msg);
             	}
             },
             error: function (XMLHttpRequest, textStatus) {
                 if (textStatus == "timeout") {
-                    showError("登录超时");
+                    show_error("注册超时");
                 } else {
-                    showError("登录失败");
+                    show_error("注册失败");
                 }
             }
         });

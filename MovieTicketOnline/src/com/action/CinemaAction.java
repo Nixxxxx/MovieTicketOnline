@@ -59,7 +59,7 @@ public class CinemaAction {
 	public boolean checkNumber(String number, int cinemaId){
 		List<Cinema> cinemas = cinemaService.findAll();
 		for(Cinema cinema:cinemas){
-			if(number.equals(cinema.getNumber()) || cinemaId != cinema.getCinemaId())
+			if(number.equals(cinema.getNumber()) && cinemaId != cinema.getCinemaId())
 				return false;
 		}
 		return true;

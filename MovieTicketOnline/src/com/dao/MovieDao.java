@@ -99,6 +99,6 @@ public class MovieDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Movie> find(String status){
-		return (List<Movie>) this.hibernateTemplate.find("from movie m where m.status like ?", status);
+		return (List<Movie>) this.hibernateTemplate.find("from Movie m where m.status like ?", status);
 	}
 }

@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.entity.Movie;
+import com.entity.Order;
 import com.entity.PageBean;
 import com.entity.Schedule;
 import com.entity.User;
 import com.service.CinemaService;
 import com.service.MovieService;
+import com.service.OrderService;
 import com.service.ScheduleService;
 import com.service.UserService;
 import com.util.MD5Util;
@@ -41,6 +43,8 @@ public class UserAction {
 	private MovieService movieService;
 	@Autowired
 	private ScheduleService scheduleService;
+	@Autowired
+	private OrderService orderService;
 	
 	private String msg;
 	private boolean success;
@@ -79,8 +83,8 @@ public class UserAction {
 	@RequestMapping(value = "/index")
 	public ModelAndView signIned(){
 		ModelAndView mav = new ModelAndView("/index");
-		List<Movie> movies = movieService.find("1");
-		Map<Integer, Integer> map =  new HashMap<Integer,Integer>();
+		List<Movie> movieList = movieService.find("1");
+		Map<Integer, Integer> map = new HashMap<Integer,Integer>();
 		List<Schedule> schedules = scheduleService.findAll();
 		for (Schedule schedule:schedules){
 			if(map.get(schedule.getMovie().getMovieId()) == null){
@@ -88,6 +92,7 @@ public class UserAction {
 			}else{
 			}
 		}
+		mav.addObject("movieList", movieList);
 		return mav;
 	}
 	
@@ -103,7 +108,7 @@ public class UserAction {
 	public boolean checkUserName(String userName, int userId){
 		List<User> users = userService.findAll();
 		for(User user:users){
-			if(userName.equals(user.getUserName()) || userId != user.getUserId())
+			if(userName.equals(user.getUserName()) && userId != user.getUserId())
 				return false;
 		}
 		return true;
@@ -149,21 +154,23 @@ public class UserAction {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/insert")
-	public void insert(HttpServletRequest request,HttpServletResponse response){
-		String userName=request.getParameter("userName");
-		if(checkUserName(userName, 0)){
-			String password = request.getParameter("password");
-			String email = request.getParameter("email");
-			String mobile = request.getParameter("mobile");
-			User user = new User(userName,MD5Util.getMD5Code(password),email,mobile);
-			success = userService.insert(user);
-			if(success)
-				msg = "添加成功";
-			else msg = "添加失败";
-		}else {
+	@RequestMapping(value = "/signUp")
+	public void insert(String userName, String password, String email, String mobile, String captcha,HttpServletRequest request,HttpServletResponse response){
+		String sRand = (String)request.getSession().getAttribute("sRand");
+		if(captcha.equalsIgnoreCase(sRand)){
+			if(checkUserName(userName, 0)){
+				User user = new User(userName,MD5Util.getMD5Code(password),email,mobile);
+				success = userService.insert(user);
+				if(success)
+					msg = "注册成功";
+				else msg = "注册失败";
+			}else {
+				success = false;
+				msg = "用户名已存在";
+			}
+		}else{
+			msg = "验证码错误";
 			success = false;
-			msg = "用户名已存在";
 		}
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
@@ -203,4 +210,9 @@ public class UserAction {
 		ResponseUtil.writeJson(response,resultJson);
 	}
 
+	@RequestMapping(value = "/orderList")
+	public void orderList(HttpServletRequest request,HttpServletResponse response){
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		List<Order> orderList = orderService.find(userId);
+	}
 }

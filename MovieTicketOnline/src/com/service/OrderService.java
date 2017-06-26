@@ -48,4 +48,8 @@ public class OrderService {
 		return orderDao.findByOrderId(orderId);
 	}
 
+	public List<Order> find(int userId) {
+		return (List<Order>) orderDao.find(userId);
+	}
+
 }

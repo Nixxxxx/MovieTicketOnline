@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.entity.Order;
 import com.entity.PageBean;
 import com.entity.Schedule;
 
@@ -89,11 +90,15 @@ public class ScheduleDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Schedule> findAll(){
-		String queryString="from Schedule";
-		return (List<Schedule>) this.hibernateTemplate.find(queryString);
+		return (List<Schedule>) this.hibernateTemplate.find("from Schedule");
 	}
 	
 	public Schedule findByScheduleId(int scheduleId){
 		return (Schedule) this.hibernateTemplate.get(Schedule.class, scheduleId);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Schedule> find(int movieId) {
+		return (List<Schedule>) this.hibernateTemplate.find("from Schedule s where s.movieId=?", movieId);
 	}
 }
