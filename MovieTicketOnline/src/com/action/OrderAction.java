@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.entity.Order;
 import com.entity.PageBean;
+import com.entity.Schedule;
 import com.service.OrderService;
 import com.service.ScheduleService;
 import com.service.UserService;
@@ -78,11 +79,19 @@ public class OrderAction {
 		int userId = Integer.parseInt(request.getParameter("userId"));
 		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
 		int amount = Integer.parseInt(request.getParameter("amount"));
-		String adress = request.getParameter("adress");
+		String adress = request.getParameter("address");
 		String mobile = request.getParameter("mobile");
 		String extra = request.getParameter("extra");
-		Order order = new Order(userService.findByUserId(userId), scheduleService.findByscheduleId(scheduleId), amount, adress, mobile,extra);
-		orderService.insert(order);
+		Order order = new Order(userService.findByUserId(userId), scheduleService.findByScheduleId(scheduleId), amount, adress, mobile,extra);
+		success = orderService.insert(order);
+		if(success){
+			msg = "成功";
+			Schedule schedule = scheduleService.findByScheduleId(scheduleId);
+			schedule.setReservation(schedule.getReservation()+amount);
+			scheduleService.update(schedule);
+		}
+		else msg = "失败";
+		System.out.println(msg);
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);

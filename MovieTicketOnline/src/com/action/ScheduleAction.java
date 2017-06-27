@@ -102,7 +102,7 @@ public class ScheduleAction {
 	@RequestMapping(value = "/update")
 	public void update(HttpServletRequest request,HttpServletResponse response) throws ParseException{
 		int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
-		Schedule schedule = scheduleService.findByscheduleId(scheduleId);
+		Schedule schedule = scheduleService.findByScheduleId(scheduleId);
 		String date = request.getParameter("date");
 		String hour = request.getParameter("hour");
 		String minute = request.getParameter("minute");

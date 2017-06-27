@@ -271,11 +271,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        //菜单栏当前选中
                         window.location.href="movie/list";
-                        $now_selected = $("ul.treeview-menu>li.active>a");
-                        $now_selected.trigger("click");
-                        $("#movie_update_modal").modal("hide");
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

@@ -85,7 +85,7 @@
 </nav>
 
   <div class="content-wrapper">
-    <iframe name="container" style="zoom: 1;" height="650px;" src="order/info" frameBorder="0" width="100%"></iframe>
+    <iframe name="container" style="zoom: 1;" height="650px;" src="user/scheduleList" frameBorder="0" width="100%"></iframe>
   </div>
 
 <!-- Modal -->

@@ -87,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <thead>
             <tr>
               <th>序号</th>
-              <th>查看场次</th>
+              <th>场次</th>
               <th>数量</th>
               <th>地址</th>
               <th>手机</th>
@@ -100,12 +100,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <c:forEach var="order" items="${orderList }" varStatus="status">
             <tr>
               <td>${status.index+1 }</td>
-              <td class="order_user">
-	              <input class="user_userName" type="hidden" value="${order.user.userName }">
-	              <input class="user_email" type="hidden" value="${order.user.email }">
-	              <input class="user_mobile" type="hidden" value="${order.user.mobile }">
-	              <a class="user" href="javascript:void(0)" data-toggle="modal" data-remote="false" data-target="#user_modal" data-backdrop="static">
-	                  <i class="fa fa-edit"></i>查看用户</a></td>
               <td class="order_schedule">
 	              <input class="cinemaName" type="hidden" value="${order.schedule.cinema.name }">
 	              <input class="movieName" type="hidden" value="${order.schedule.movie.name }">
@@ -134,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <td class="order_extra">${order.extra }</td>
               <td>
                 <a data-id="${order.orderId }" class="" href="javascript:void(0)">
-                  <i class="fa fa-trash"></i> 确认订单</a>
+                  <i class="fa fa-trash"></i> 取消订单</a>
               </td>
             </tr>
             </c:forEach>
@@ -160,49 +154,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
 </section>
 <!-- /.content -->
-
-<!-- Modal -->
-<div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="schedule_update_label">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <!-- Horizontal Form -->
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h3 class="box-title" id="schedule_update_label">用户信息</h3>
-        </div>
-        <!-- /.box-header -->
-          <div class="box-body">
-            <div class="form-group">
-              <label for="user_userName" class="col-sm-2 control-label">用户名</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control pull-right" id="user_userName" readonly>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="user_email" class="col-sm-2 control-label">email</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control pull-right" id="user_email" readonly>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="user_mobile" class="col-sm-2 control-label">mobile</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control pull-right" id="user_mobile" readonly>
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          </div>
-          <!-- /.box-footer -->
-      </div>
-      <!-- /.box -->
-    </div>
-  </div>
-</div>
 
 
 <!-- Modal -->

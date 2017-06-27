@@ -1,9 +1,11 @@
 package com.action;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -211,8 +213,17 @@ public class UserAction {
 	}
 
 	@RequestMapping(value = "/orderList")
-	public void orderList(HttpServletRequest request,HttpServletResponse response){
+	public void orderList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
 		int userId = Integer.parseInt(request.getParameter("userId"));
 		List<Order> orderList = orderService.find(userId);
+		request.getSession().setAttribute("orderList", orderList);
+		response.sendRedirect("orderList.jsp");
+	}
+	
+	@RequestMapping(value = "/scheduleList")
+	public void scheduleList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+		List<Schedule> scheduleList = scheduleService.findAll();
+		request.getSession().setAttribute("scheduleList", scheduleList);
+		response.sendRedirect("./scheduleList.jsp");
 	}
 }

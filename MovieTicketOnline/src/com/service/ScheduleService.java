@@ -44,7 +44,7 @@ public class ScheduleService {
 		return scheduleDao.findAll();
 	}
 	
-	public Schedule findByscheduleId(int scheduleId){
+	public Schedule findByScheduleId(int scheduleId){
 		return scheduleDao.findByScheduleId(scheduleId);
 	}
 }
