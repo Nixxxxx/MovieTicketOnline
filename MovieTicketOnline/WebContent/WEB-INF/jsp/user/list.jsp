@@ -193,7 +193,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     success: function (data) {
                         alert(data.msg);
                         if (data.success) {
-                            //菜单栏当前选中
                             window.location.href="user/list";
                         }
                     },
@@ -232,9 +231,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 success: function (data) {
                     alert(data.msg);
                     if (data.success) {
-                        //菜单栏当前选中
                         window.location.href="user/list";
-                        $("#user_update_modal").modal("hide");
                     }
                 },
                 error: function (XMLHttpRequest, textStatus) {

@@ -204,52 +204,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         //删除
         $(".buy").click(function () {
-
             $("#order_scheduleId").val($(this).data("id"));
             $("#order_seat").val($(this).parent().prevAll(".schedule_seat").text());
             $("#order_reservation").val($(this).parent().prevAll(".schedule_reservation").text());
-
-            var $order_form = $("#order_form");
-            $order_form.submit(function () {
-            	var amount = $("#order_amount").val();
-            	var pattern = /^[0-9]{1,3}$/;
-            	if(!pattern.test(amount)){
-            		alert("输入不合法");
-            		return false;
-            	}
-            	if(amount*1+$("#order_reservation").val()*1>$("#order_seat").val()*1){
-            		alert("没票了");
-            		return false;
-            	}
-            	
-            	$order_btn = $("#order_btn");
-                $.ajax({
-                    url: "order/insert",
-                    type: "POST",
-                    data: $("#order_form").serialize(),
-                    dataType: "json",
-                    beforeSend: function () {
-                        $order_btn.button("loading");
-                    },
-                    complete: function () {
-                        $order_btn.button("reset");
-                    },
-                    success: function (data) {
-                        alert(data.msg+data.success);
-                        if (data.success) {
-                            window.location.href="user/scheduleList";
-                        }
-                    },
-                    error: function (XMLHttpRequest, textStatus) {
-                        if (textStatus === "timeout") {
-                            alert("超时！");
-                        } else {
-                            alert("失败！");
-                        }
-                    }
-                })
-        });
       })
+      
+      var $order_form = $("#order_form");
+        $order_form.submit(function () {
+        	var amount = $("#order_amount").val();
+        	var pattern = /^[0-9]{1,3}$/;
+        	if(!pattern.test(amount)){
+        		alert("输入不合法");
+        		return false;
+        	}
+        	if(amount*1+$("#order_reservation").val()*1>$("#order_seat").val()*1){
+        		alert("没票了");
+        		return false;
+        	}
+        	
+        	$order_btn = $("#order_btn");
+            $.ajax({
+                url: "order/insert",
+                type: "POST",
+                data: $("#order_form").serialize(),
+                dataType: "json",
+                beforeSend: function () {
+                    $order_btn.button("loading");
+                },
+                complete: function () {
+                    $order_btn.button("reset");
+                },
+                success: function (data) {
+                    alert(data.msg);
+                    if (data.success) {
+                        window.location.href="user/scheduleList";
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    if (textStatus === "timeout") {
+                        alert("超时！");
+                    } else {
+                        alert("失败！");
+                    }
+                }
+            });
+            return false;
+    });
    })
 </script>
 </body>

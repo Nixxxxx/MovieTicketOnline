@@ -85,13 +85,13 @@ public class OrderAction {
 		Order order = new Order(userService.findByUserId(userId), scheduleService.findByScheduleId(scheduleId), amount, adress, mobile,extra);
 		success = orderService.insert(order);
 		if(success){
-			msg = "成功";
 			Schedule schedule = scheduleService.findByScheduleId(scheduleId);
 			schedule.setReservation(schedule.getReservation()+amount);
-			scheduleService.update(schedule);
+			success = scheduleService.update(schedule);
 		}
+		if(success)
+			msg = "成功";
 		else msg = "失败";
-		System.out.println(msg);
 		resultJson.put("msg",msg);
 		resultJson.put("success", success);
 		ResponseUtil.writeJson(response,resultJson);
